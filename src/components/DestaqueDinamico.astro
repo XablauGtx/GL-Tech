@@ -21,7 +21,7 @@
 </div>
 
 <script>
-  // SUGESTÃO: Frases que parecem comandos ou funções
+  // A lista de frases e a função sleep continuam as mesmas
   const frases = [
     "GL.build('aplicativos_moveis');",
     "GL.design('interfaces_intuitivas');",
@@ -35,28 +35,26 @@
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  // A função typewriter continua a mesma
   async function typewriter() {
     if (!elementoTexto) return;
-
     while (true) {
       let fraseAtual = frases[i];
-      
       for (let j = 0; j < fraseAtual.length; j++) {
         elementoTexto.textContent += fraseAtual[j];
-        await sleep(80); // Um pouco mais rápido
+        await sleep(80);
       }
-      
       await sleep(2000);
-
       elementoTexto.textContent = '';
-      
       await sleep(500); 
-      
       i = (i + 1) % frases.length;
     }
   }
 
-  document.addEventListener('DOMContentLoaded', typewriter);
+  // --- A MUDANÇA ESTÁ AQUI ---
+  // Em vez de esperar pelo DOMContentLoaded, nós simplesmente chamamos a função.
+  // O Astro, com o client:visible, já garante que o DOM estará pronto.
+  typewriter();
 </script>
 
 <style>
