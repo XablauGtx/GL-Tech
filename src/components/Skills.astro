@@ -1,0 +1,67 @@
+---
+// src/components/Skills.astro - NOVO DESIGN HORIZONTAL
+import { Icon } from 'astro-icon/components';
+
+const skills = [
+  { nome: 'CSS3', icone: 'simple-icons:css3', nivel: '90%' },
+  { nome: 'Vue.js', icone: 'simple-icons:vuedotjs', nivel: '85%' }, // CORRIGIDO
+  { nome: 'PostgreSQL', icone: 'simple-icons:postgresql', nivel: '75%' },
+  { nome: 'JavaScript', icone: 'simple-icons:javascript', nivel: '90%' },
+  // Adicione suas outras skills aqui, sempre buscando o nome correto do ícone
+];
+  // Adicione suas outras skills aqui
+---
+<section class="skills-section">
+  <h2 class="titulo-secao">Skills</h2>
+  <div class="skills-grid">
+    {skills.map(skill => (
+      <div class="skill-card">
+        <span class="skill-nome">{skill.nome}</span>
+        <Icon name={skill.icone} class="skill-icone" />
+        <div class="skill-bar-container">
+          <div class="skill-bar-level" style={`width: ${skill.nivel};`}></div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .skills-section { margin-bottom: 80px; }
+  .titulo-secao {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.5rem;
+    color: var(--cor-texto-principal);
+    margin-bottom: 32px;
+  }
+  /* O ícone quadrado ao lado do título */
+  .titulo-secao::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--cor-destaque);
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 30px;
+  }
+  .skill-card {
+    text-align: center;
+  }
+  .skill-nome {
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+    display: block;
+    margin-bottom: 12px;
+  }
+  .skill-icone {
+    font-size: 3rem; /* Tamanho do ícone */
+    margin-bottom: 12px;
+  }
+  .skill-bar-container { width: 100%; height: 6px; background-color: var(--cor-fundo-secundario); border-radius: 3px; }
+  .skill-bar-level { height: 100%; background-color: var(--cor-destaque); border-radius: 3px; }
+</style>

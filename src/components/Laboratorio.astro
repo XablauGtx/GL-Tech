@@ -1,0 +1,138 @@
+---
+// Arquivo: src/components/Laboratorio.astro
+// Versão completa com layout em grade, cards e filtro interativo
+
+import { Icon } from 'astro-icon/components';
+
+const projetos = [
+  {
+    titulo: 'GL Tech - Website Institucional',
+    categoria: 'Web',
+    descricao: 'Desenvolvimento completo do nosso site institucional com Astro, focado em performance e interatividade para apresentar nossas capacidades.',
+    imagem: '/img/equipe/gustavob.jpg', // Troque pela imagem do projeto
+    link: '#', // Coloque o link do projeto aqui
+    tags: ['Astro', 'UI/UX', 'SEO'],
+  },
+  {
+    titulo: 'Plataforma de E-learning',
+    categoria: 'Web',
+    descricao: 'Criação de uma plataforma de cursos online com área de membros, upload de vídeos e integração de pagamentos para um cliente da área de educação.',
+    imagem: '/projetos/loja-virtual.png', // Troque pela imagem do projeto
+    link: '#',
+    tags: ['React', 'Node.js', 'Stripe'],
+  },
+  {
+    titulo: 'Identidade Visual - Fintech',
+    categoria: 'Design',
+    descricao: 'Criação de identidade visual completa, incluindo logo, paleta de cores, tipografia e guia de estilo para uma startup do setor financeiro.',
+    imagem: '/projetos/app-tarefas.jpg', // Troque pela imagem do projeto
+    link: '#',
+    tags: ['Figma', 'Illustrator', 'Branding'],
+  },
+  {
+    titulo: 'App de Logística e Entregas',
+    categoria: 'Mobile',
+    descricao: 'Aplicativo mobile para iOS e Android para gerenciamento de rotas e entregas em tempo real, otimizando a operação de uma grande transportadora.',
+    imagem: '/projetos/projeto-1.jpg', // Troque pela imagem do projeto
+    link: '#',
+    tags: ['React Native', 'Firebase', 'Google Maps API'],
+  },
+];
+// ------------------------------------
+---
+<section class="laboratorio-section">
+  <div class="laboratorio-header">
+    <h2 class="titulo-secao"># Laboratório</h2>
+    <div class="filtros">
+      <button class="filtro-btn ativo" data-categoria="todos">Todos</button>
+      <button class="filtro-btn" data-categoria="Web">Web</button>
+      <button class="filtro-btn" data-categoria="Mobile">Mobile</button>
+      <button class="filtro-btn" data-categoria="Design">Design</button>
+    </div>
+  </div>
+
+  <div class="projetos-container">
+    {projetos.map(projeto => (
+      <a href={projeto.link} target="_blank" rel="noopener noreferrer" class="projeto-card" data-categoria={projeto.categoria}>
+        <img src={projeto.imagem} alt={`Imagem do projeto ${projeto.titulo}`} class="projeto-imagem" />
+        <div class="projeto-info">
+          <h3>{projeto.titulo}</h3>
+          <p>{projeto.descricao}</p>
+          <div class="projeto-tags">
+            {projeto.tags.map(tag => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const botoesFiltro = document.querySelectorAll('.filtro-btn');
+    
+    // A CORREÇÃO ESTÁ AQUI 👇
+    const cardsProjeto = document.querySelectorAll<HTMLElement>('.projeto-card');
+
+    botoesFiltro.forEach(botao => {
+      botao.addEventListener('click', () => {
+        botoesFiltro.forEach(btn => btn.classList.remove('ativo'));
+        botao.classList.add('ativo');
+
+        const categoriaSelecionada = botao.getAttribute('data-categoria');
+
+        cardsProjeto.forEach(card => {
+          // Agora o TypeScript sabe que 'card' é um HTMLElement e tem a propriedade .style
+          const categoriaCard = card.getAttribute('data-categoria');
+          if (categoriaSelecionada === 'todos' || categoriaSelecionada === categoriaCard) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
+
+
+<style>
+  .laboratorio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .titulo-secao { color: var(--cor-destaque); font-weight: 500; margin: 0; }
+  .filtros { display: flex; gap: 12px; }
+  .filtro-btn {
+    background-color: transparent;
+    border: 1px solid #374151;
+    color: var(--cor-texto-secundario);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .filtro-btn:hover { background-color: #374151; color: var(--cor-texto-principal); }
+  .filtro-btn.ativo { background-color: var(--cor-destaque); color: var(--cor-fundo); border-color: var(--cor-destaque); }
+
+  .projetos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+  }
+  .projeto-card { background-color: var(--cor-fundo-secundario); border-radius: 8px; overflow: hidden; text-decoration: none; color: var(--cor-texto-principal); display: block; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .projeto-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+  .projeto-imagem { width: 100%; height: 200px; object-fit: cover; }
+  .projeto-info { padding: 20px; }
+  .projeto-info h3 { margin: 0 0 8px 0; font-size: 1.2rem; }
+  .projeto-info p { margin: 0 0 16px 0; color: var(--cor-texto-secundario); font-size: 0.9rem; line-height: 1.6; }
+  .projeto-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background-color: var(--cor-destaque); color: var(--cor-fundo); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
+</style>

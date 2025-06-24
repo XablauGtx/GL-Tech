@@ -1,0 +1,97 @@
+---
+// Arquivo: src/components/Header.astro
+// VERSÃO FINAL - Logo no centro
+
+const { pathname } = Astro.url;
+---
+<header class="site-header">
+  <nav class="nav-esquerda">
+    <a href="/servicos" class:list={{ ativo: pathname.startsWith('/servicos') }}>Serviços</a>
+    <span class="divisor">·</span>
+    <a href="/projetos" class:list={{ ativo: pathname.startsWith('/projetos') }}>Projetos</a>
+  </nav>
+
+  <div class="nav-logo">
+    <a href="/">
+      <img src="/img/logo/logo.png" alt="GL Technology Logo" />
+    </a>
+  </div>
+
+  <nav class="nav-direita">
+    <a href="/processo" class:list={{ ativo: pathname.startsWith('/processo') }}>Nosso Processo</a>
+    <span class="divisor">·</span>
+    <a href="/contato" class:list={{ ativo: pathname.startsWith('/contato') }}>Contato</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* Esquerda | Centro (automático) | Direita */
+    align-items: center;
+    padding: 24px 0;
+    font-weight: 500;
+  }
+
+  /* Alinhamento das NAVs */
+  .nav-esquerda {
+    justify-self: end; /* Alinha à direita da sua coluna */
+    text-align: right;
+  }
+  .nav-direita {
+    justify-self: start; /* Alinha à esquerda da sua coluna */
+  }
+
+  /* Estilo dos links */
+  .nav-esquerda, .nav-direita {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+  }
+  .nav-esquerda a, .nav-direita a {
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-esquerda a:hover, .nav-direita a:hover {
+    color: var(--cor-texto-principal);
+  }
+
+  /* Estilo do link ATIVO */
+  a.ativo {
+    color: var(--cor-destaque);
+    font-weight: 700;
+  }
+
+  /* Estilo da Logo */
+  .nav-logo a {
+    display: block;
+    padding: 0 80px; /* Espaçamento da logo para os links */
+  }
+  .nav-logo img {
+    height: 110px; /* Ajuste a altura da sua logo */
+    width: auto;
+    display: block;
+  }
+
+  /* Divisor */
+  .divisor {
+    color: #374151; /* Cor sutil para o divisor */
+  }
+
+  /* Responsividade para o Header */
+  @media (max-width: 768px) {
+    .site-header {
+      grid-template-columns: 1fr; /* Empilha tudo em uma coluna */
+      gap: 20px;
+      justify-items: center;
+    }
+    .nav-logo {
+      order: -1; /* Coloca a logo no topo em telas pequenas */
+      padding: 0;
+    }
+    .nav-esquerda, .nav-direita {
+      justify-self: center;
+    }
+  }
+</style>

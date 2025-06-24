@@ -1,0 +1,72 @@
+---
+// src/components/Hero.astro
+---
+<section class="hero-section">
+    <div class="hero-texto">
+      <p class="cargo">SOLUÇÕES DIGITAIS COMPLETAS: DA INFRAESTRUTURA À INTERFACE</p>
+      <h1>GL Technology</h1>
+      <p class="descricao">
+        Nós somos a parceira de tecnologia que sua empresa precisa para decolar no cenário digital. Da arquitetura de uma infraestrutura robusta ao desenvolvimento de aplicativos web e mobile de alta performance, passando pela criação de conteúdo visual que captura a atenção. Entregamos um ecossistema digital completo e sob medida para o seu sucesso.
+      </p>
+    </div>
+  </section>
+  
+  <style>
+    .hero-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      min-height: 40vh; /* Garante uma altura mínima para a seção */
+    }
+  
+    .hero-texto {
+      flex: 1; /* Ocupa o espaço disponível */
+    }
+  
+    .cargo {
+      color: var(--cor-destaque);
+      font-weight: 500;
+      margin-bottom: 8px;
+      letter-spacing: 1px; /* Espaçamento entre letras */
+      text-transform: uppercase; /* Tudo em maiúsculas */
+    }
+  
+    h1 {
+      font-size: 3rem; /* Tamanho grande para o nome */
+      margin: 0;
+      color: var(--cor-texto-principal);
+    }
+  
+    .descricao {
+      font-size: 1rem;
+      color: var(--cor-texto-secundario);
+      max-width: 500px; /* Limita a largura do texto */
+      margin-top: 16px;
+      margin-bottom: 32px;
+    }
+  
+    .botao-curriculo {
+      border: 1px solid var(--cor-destaque);
+      color: var(--cor-destaque);
+      background-color: transparent;
+      padding: 12px 24px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s, color 0.3s;
+    }
+  
+    .botao-curriculo:hover {
+      background-color: var(--cor-destaque);
+      color: var(--cor-fundo);
+    }
+  
+    .hero-ilustracao {
+      flex-shrink: 0; /* Impede que a ilustração encolha */
+    }
+  
+    .hero-ilustracao img {
+      max-width: 250px;
+      height: auto;
+    }
+  </style>

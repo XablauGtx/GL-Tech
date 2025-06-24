@@ -1,0 +1,49 @@
+---
+// src/components/Servicos.astro - VERSÃO ATUALIZADA E COMPLETA
+import { Icon } from 'astro-icon/components';
+
+const servicos = [
+  {
+    icone: 'mdi:server-network',
+    titulo: 'Infraestrutura Cloud & DevOps',
+    descricao: 'Projetamos e gerenciamos arquiteturas na nuvem (AWS, Google Cloud) que são seguras, escaláveis e de alta disponibilidade. Garantimos que sua operação digital esteja sempre no ar e pronta para crescer.'
+  },
+  {
+    icone: 'mdi:code-braces',
+    titulo: 'Desenvolvimento Web & Mobile',
+    descricao: 'Construímos plataformas, e-commerces e aplicativos sob medida que funcionam perfeitamente em qualquer dispositivo. Do back-end robusto ao front-end interativo, transformamos sua visão em código.'
+  },
+  {
+    icone: 'mdi:palette-swatch-outline',
+    titulo: 'Design Digital & Conteúdo Multimídia',
+    descricao: 'Criamos a identidade visual completa para sua marca. Da criação de interfaces (UI/UX) à produção e edição de fotos e vídeos de alto impacto, comunicamos sua mensagem da forma mais eficaz.'
+  }
+];
+---
+<section class="servicos-section">
+  <div class="servicos-header">
+    <h1 class="titulo-pagina">Nossas Capacidades</h1>
+    <p class="subtitulo-pagina">Uma solução completa para cada desafio digital.</p>
+  </div>
+  <div class="servicos-grid">
+    {servicos.map(servico => (
+      <div class="servico-card">
+        <Icon name={servico.icone} class="servico-icone" />
+        <h3 class="servico-titulo">{servico.titulo}</h3>
+        <p class="servico-descricao">{servico.descricao}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* Os estilos que você já tem funcionarão perfeitamente aqui */
+  .servicos-header { text-align: center; margin-bottom: 60px; }
+  .titulo-pagina { font-size: 2.5rem; margin-bottom: 8px; }
+  .subtitulo-pagina { font-size: 1.1rem; color: var(--cor-texto-secundario); max-width: 500px; margin: 0 auto; }
+  .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+  .servico-card { background-color: var(--cor-fundo-secundario); padding: 32px; border-radius: 8px; border-top: 4px solid var(--cor-destaque); }
+  .servico-icone { font-size: 3rem; color: var(--cor-destaque); margin-bottom: 16px; }
+  .servico-titulo { font-size: 1.3rem; margin-top: 0; margin-bottom: 12px; }
+  .servico-descricao { color: var(--cor-texto-secundario); line-height: 1.7; }
+</style>

@@ -1,0 +1,65 @@
+---
+// Arquivo: src/pages/equipe/[slug].astro
+
+import PaginaInterna from '../../layouts/PaginaInterna.astro';
+import { membros } from '../../data/equipeDados';
+import { Icon } from 'astro-icon/components';
+
+// Esta função mágica diz ao Astro para criar uma página para cada membro
+export async function getStaticPaths() {
+  return membros.map(membro => ({
+    params: { slug: membro.slug }, // Define a URL da página
+    props: { membro },             // Passa os dados do membro para a página
+  }));
+}
+
+// Aqui, recebemos os dados do membro específico desta página
+const { membro } = Astro.props;
+---
+
+<PaginaInterna>
+  <div class="perfil-container" transition:animate="fade">
+    <header class="perfil-header">
+      <img src={membro.foto} alt={`Foto de ${membro.nome}`} class="perfil-foto" />
+      <div class="perfil-identidade">
+        <h1 class="perfil-nome">{membro.nome}</h1>
+        <p class="perfil-cargo">{membro.cargo}</p>
+        <a href={membro.linkedin} target="_blank" rel="noopener noreferrer" class="perfil-linkedin">
+          <Icon name="mdi:linkedin" /> Ver Perfil no LinkedIn
+        </a>
+      </div>
+    </header>
+
+    <div class="perfil-conteudo">
+      <div class="secao-bio">
+        <h2>Sobre {membro.nome.split(' ')[0]}</h2>
+        <p>{membro.bio}</p>
+      </div>
+
+      <div class="secao-skills">
+        <h2>Principais Habilidades</h2>
+        <div class="skills-grid">
+          {membro.skills.map(skill => (
+            <div class="skill-card">
+              <Icon name="mdi:check-decagram" class="skill-icone" />
+              <span>{skill}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</PaginaInterna>
+
+<style>
+  .perfil-header { display: flex; align-items: center; gap: 32px; background-color: var(--cor-fundo-secundario); padding: 32px; border-radius: 8px; margin-bottom: 40px; }
+  .perfil-foto { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--cor-destaque); flex-shrink: 0; }
+  .perfil-nome { font-size: 2.5rem; margin: 0; }
+  .perfil-cargo { font-size: 1.2rem; color: var(--cor-texto-secundario); margin: 4px 0 16px 0; }
+  .perfil-linkedin { display: inline-flex; align-items: center; gap: 8px; color: var(--cor-destaque); text-decoration: none; font-weight: 500; }
+  .perfil-conteudo h2 { font-size: 1.8rem; color: var(--cor-destaque); border-bottom: 2px solid #374151; padding-bottom: 8px; margin-bottom: 24px; margin-top: 40px; }
+  .secao-bio p { font-size: 1.1rem; line-height: 1.8; color: var(--cor-texto-secundario); max-width: 75ch; }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .skill-card { display: flex; align-items: center; gap: 8px; background-color: var(--cor-fundo-secundario); padding: 10px 16px; border-radius: 6px; font-size: 0.9rem; font-weight: 500; }
+  .skill-icone { color: var(--cor-destaque); font-size: 1.2rem; }
+</style>

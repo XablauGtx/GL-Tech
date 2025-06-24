@@ -1,0 +1,116 @@
+---
+// Arquivo: src/components/Processo.astro
+import { Icon } from 'astro-icon/components';
+
+// Defina as etapas do seu processo aqui.
+const etapas = [
+  {
+    numero: '01',
+    titulo: 'Imersão & Descoberta',
+    icone: 'mdi:magnify',
+    descricao: 'Tudo começa com uma conversa. Mergulhamos no seu negócio para entender suas metas, desafios e público. Esta fase de briefing é crucial para alinhar expectativas e definir os pilares do projeto.'
+  },
+  {
+    numero: '02',
+    titulo: 'Design & Prototipação (UI/UX)',
+    icone: 'mdi:palette-swatch-outline',
+    descricao: 'Com base na descoberta, nossa equipe de design cria wireframes e protótipos interativos. Você poderá ver e sentir a experiência do usuário antes mesmo de uma única linha de código ser escrita.'
+  },
+  {
+    numero: '03',
+    titulo: 'Desenvolvimento & Tecnologia',
+    icone: 'mdi:code-braces',
+    descricao: 'É aqui que a visão se torna realidade. Nossos desenvolvedores utilizam as tecnologias mais modernas e robustas para construir uma solução performática, segura e escalável, seguindo as melhores práticas do mercado.'
+  },
+  {
+    numero: '04',
+    titulo: 'Testes & Garantia de Qualidade',
+    icone: 'mdi:clipboard-check-outline',
+    descricao: 'Antes do lançamento, realizamos uma bateria de testes rigorosos em diferentes dispositivos e cenários para garantir que tudo funcione perfeitamente. Nenhum detalhe passa despercebido.'
+  },
+  {
+    numero: '05',
+    titulo: 'Lançamento & Suporte (Deploy)',
+    icone: 'mdi:rocket-launch-outline',
+    descricao: 'Com tudo aprovado, publicamos o projeto. Mas nossa parceria não termina aqui. Oferecemos suporte contínuo e planos de manutenção para garantir que sua plataforma evolua junto com o seu negócio.'
+  }
+];
+---
+<section class="processo-section">
+  <div class="processo-header">
+    <h1 class="titulo-pagina">Nosso Processo</h1>
+    <p class="subtitulo-pagina">Da ideia ao lançamento, um caminho transparente e colaborativo para o sucesso do seu projeto.</p>
+  </div>
+  <div class="timeline">
+    {etapas.map(etapa => (
+      <div class="timeline-item">
+        <div class="timeline-icone">
+          <Icon name={etapa.icone} />
+        </div>
+        <div class="timeline-conteudo">
+          <span class="etapa-numero">{etapa.numero}</span>
+          <h3 class="etapa-titulo">{etapa.titulo}</h3>
+          <p class="etapa-descricao">{etapa.descricao}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .processo-header { text-align: center; margin-bottom: 80px; }
+  .titulo-pagina { font-size: 2.8rem; margin-bottom: 16px; }
+  .subtitulo-pagina { font-size: 1.1rem; color: var(--cor-texto-secundario); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+  .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+  /* A linha vertical da timeline */
+  .timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: var(--cor-fundo-secundario);
+    top: 0;
+    bottom: 0;
+    left: 50px;
+    margin-left: -2px;
+  }
+  .timeline-item {
+    padding: 10px 40px 40px 120px;
+    position: relative;
+  }
+  .timeline-icone {
+    position: absolute;
+    left: 50px;
+    top: 10px;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--cor-destaque);
+    color: var(--cor-fundo);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    z-index: 1;
+    border: 4px solid var(--cor-fundo);
+  }
+  .etapa-numero {
+    background-color: var(--cor-destaque);
+    color: var(--cor-fundo);
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .etapa-titulo {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  .etapa-descricao {
+    margin-top: 8px;
+    color: var(--cor-texto-secundario);
+    line-height: 1.7;
+  }
+</style>

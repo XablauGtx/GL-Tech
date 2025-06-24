@@ -1,0 +1,116 @@
+---
+// src/components/DestaqueDinamico.astro - VERSÃO FINAL ESTILIZADA
+
+---
+<div class="destaque-box">
+  <div class="destaque-header">
+    <div class="traffic-lights">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+    </div>
+    <div class="header-title">
+      bash -- ~GL_Technology
+    </div>
+  </div>
+  <div class="destaque-body">
+    <span class="prompt">$</span>
+    <span id="texto-dinamico" class="texto-digitando"></span>
+    <span class="cursor">|</span>
+  </div>
+</div>
+
+<script>
+  // SUGESTÃO: Frases que parecem comandos ou funções
+  const frases = [
+    "GL.build('aplicativos_moveis');",
+    "GL.design('interfaces_intuitivas');",
+    "GL.deploy('infra_escalavel');",
+    "GL.create('solucoes_completas');"
+  ];
+  let i = 0;
+  const elementoTexto = document.getElementById("texto-dinamico");
+
+  function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function typewriter() {
+    if (!elementoTexto) return;
+
+    while (true) {
+      let fraseAtual = frases[i];
+      
+      for (let j = 0; j < fraseAtual.length; j++) {
+        elementoTexto.textContent += fraseAtual[j];
+        await sleep(80); // Um pouco mais rápido
+      }
+      
+      await sleep(2000);
+
+      elementoTexto.textContent = '';
+      
+      await sleep(500); 
+      
+      i = (i + 1) % frases.length;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', typewriter);
+</script>
+
+<style>
+  .destaque-box {
+    background-color: #191c23;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .destaque-header {
+    background-color: var(--cor-fundo-secundario);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #374151;
+    flex-shrink: 0; /* Impede que o header encolha */
+  }
+
+  .traffic-lights { display: flex; gap: 8px; }
+  .traffic-lights .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background-color: #ff5f56; }
+  .dot.yellow { background-color: #ffbd2e; }
+  .dot.green { background-color: #27c93f; }
+
+  .header-title {
+    color: var(--cor-texto-secundario);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    margin: 0 auto;
+  }
+
+  .destaque-body {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    font-family: 'Fira Code', 'Source Code Pro', monospace;
+    font-size: 1.5rem;
+    font-weight: 300;
+    
+    /* LINHA CORRIGIDA AQUI */
+    min-height: 7em; 
+  }
+
+  .prompt { color: var(--cor-destaque); margin-right: 12px; }
+  .cursor { color: var(--cor-destaque); animation: blink 1s step-end infinite; }
+
+  @keyframes blink {
+    from, to { color: transparent }
+    50% { color: var(--cor-destaque); }
+  }
+</style>

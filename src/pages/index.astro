@@ -1,11 +1,62 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+// src/pages/index.astro - COM O NOVO LAYOUT HÍBRIDO
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Sobre from '../components/Sobre.astro';
+import EquipeHomepage from '../components/EquipeHomepage.astro';
+import DestaqueDinamico from '../components/DestaqueDinamico.astro';
+
 ---
 
 <Layout>
-	<Welcome />
+  <section class="secao-hero-grid" transition:animate="fade">
+    <div class="hero-content">
+      <Hero />
+    </div>
+    <div class="destaque-content">
+      <DestaqueDinamico client:visible />
+    </div>
+  </section>
+
+  <hr class="divisor" />
+
+  <div transition:animate="fade">
+    <EquipeHomepage />
+    <Sobre />
+  </div>
 </Layout>
+
+<style>
+  .secao-hero-grid {
+    display: grid;
+    /* Por padrão, temos 2 colunas */
+    grid-template-columns: 1.5fr 1fr;
+    gap: 40px;
+    align-items: center;
+    padding: 40px 0;
+  }
+
+  .divisor {
+    border: none;
+    border-top: 1px solid #374151;
+    margin: 20px 0 60px 0;
+  }
+
+  /* --- A MÁGICA DA RESPONSIVIDADE ACONTECE AQUI --- */
+  /* Esta regra só será aplicada em telas com largura de 900px ou menos */
+  @media (max-width: 900px) {
+    .secao-hero-grid {
+      /* Muda o grid para ter apenas 1 coluna */
+      grid-template-columns: 1fr;
+      /* Podemos reduzir um pouco o espaçamento em telas menores */
+      gap: 30px;
+      text-align: center; /* Centraliza o texto do Hero no mobile */
+    }
+
+    .hero-content {
+        /* Garante um espaço entre o texto e a caixa dinâmica quando empilhados */
+        margin-bottom: 20px;
+    }
+  }
+</style>
