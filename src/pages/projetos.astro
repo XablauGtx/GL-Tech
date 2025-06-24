@@ -1,65 +1,16 @@
 ---
-// src/pages/projetos.astro - com Intro e CTA
+// Arquivo TEMPORÁRIO para teste: src/pages/projetos.astro
 
-import PaginaInterna from '../layouts/PaginaInterna.astro';
-import Skills from '../components/Skills.astro';
-import Laboratorio from '../components/Laboratorio.astro';
+import LayoutDuasColunas from '../layouts/LayoutDuasColunas.astro';
 ---
 
-<PaginaInterna>
-  <div class="pagina-header">
-    <h1>Nosso Trabalho & Nossas Ferramentas</h1>
-    <p>Aqui você pode explorar alguns dos projetos que tivemos o prazer de desenvolver e as tecnologias que dominamos para criar soluções de alto impacto.</p>
+<LayoutDuasColunas>
+  <div slot="esquerda">
+    <h1>Teste de Build - Projetos</h1>
+    <p>Se esta página aparecer, o layout está funcionando.</p>
   </div>
-  <Skills />
-  <Laboratorio />
 
-  <section class="cta-final">
-    <h2>Gostou do que viu?</h2>
-    <p>Vamos conversar sobre como podemos aplicar nossa expertise no seu próximo projeto.</p>
-    <a href="/contato" class="botao-cta">Entre em Contato</a>
-  </section>
-  </PaginaInterna>
-
-<style>
-  .pagina-header {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 80px auto;
-  }
-  .pagina-header h1 {
-    font-size: 2.8rem;
-    margin-bottom: 16px;
-  }
-  .pagina-header p {
-    font-size: 1.1rem;
-    color: var(--cor-texto-secundario);
-    line-height: 1.7;
-  }
-
-  .cta-final {
-    text-align: center;
-    background-color: var(--cor-fundo-secundario);
-    padding: 60px 24px;
-    border-radius: 8px;
-    margin-top: 80px;
-  }
-  .cta-final h2 {
-    font-size: 2rem;
-    margin-top: 0;
-  }
-  .botao-cta {
-    display: inline-block;
-    background-color: var(--cor-destaque);
-    color: var(--cor-fundo);
-    padding: 14px 32px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 700;
-    margin-top: 16px;
-    transition: transform 0.3s;
-  }
-  .botao-cta:hover {
-    transform: scale(1.05);
-  }
-</style>
+  <div slot="direita">
+    <h2>Coluna da Direita</h2>
+  </div>
+</LayoutDuasColunas>
