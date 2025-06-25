@@ -12,18 +12,18 @@ import DestaqueDinamico from '../components/DestaqueDinamico.astro';
 <Layout>
   <section class="secao-hero-grid" transition:animate="fade">
     <div class="hero-content">
-      <Hero />
+      <Hero transition:animate="fade" />
     </div>
     <div class="destaque-content">
-      <DestaqueDinamico client:visible />
+      <DestaqueDinamico transition:animate="fade"/>
     </div>
   </section>
 
   <hr class="divisor" />
 
   <div transition:animate="fade">
-    <EquipeHomepage />
-    <Sobre />
+    <EquipeHomepage transition:animate="fade"/>
+    <Sobre transition:animate="fade"/>
   </div>
 </Layout>
 
