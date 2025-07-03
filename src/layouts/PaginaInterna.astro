@@ -14,7 +14,7 @@ import { ViewTransitions } from 'astro:transitions';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
   </head>
-  <body>
+
     <div class="site-container">
       <Header /> 
       <main class="conteudo-principal">
@@ -32,10 +32,18 @@ import { ViewTransitions } from 'astro:transitions';
     --cor-destaque: #00c8ff;
   }
   body {
-    background-color: var(--cor-fundo);
     color: var(--cor-texto-principal);
     font-family: 'Poppins', sans-serif;
     margin: 0;
+    background-color: var(--cor-fundo);
+    
+    /* MUDANÇA 2: Usamos a variável CSS aqui */
+    background-image: linear-gradient(rgba(20, 23, 29, 0.9), rgba(20, 23, 29, 0.9)), url('/background.png');
+
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
   }
   .site-container {
      max-width: 1100px;

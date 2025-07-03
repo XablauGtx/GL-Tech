@@ -1,97 +1,89 @@
 ---
-// Arquivo: src/components/Header.astro
-// VERSÃO FINAL - Logo no centro
+// src/components/Header.astro - ATUALIZADO COM O LINK "SOBRE"
 
 const { pathname } = Astro.url;
 ---
-<header class="site-header">
-  <nav class="nav-esquerda">
-    <a href="/servicos" class:list={{ ativo: pathname.startsWith('/servicos') }}>Serviços</a>
-    <span class="divisor">·</span>
-    <a href="/projetos" class:list={{ ativo: pathname.startsWith('/projetos') }}>Projetos</a>
-  </nav>
 
-  <div class="nav-logo">
+<header class="site-header">
+  <div class="header-logo">
     <a href="/">
       <img src="/img/logo/logo.png" alt="GL Technology Logo" />
     </a>
   </div>
 
-  <nav class="nav-direita">
-    <a href="/processo" class:list={{ ativo: pathname.startsWith('/processo') }}>Nosso Processo</a>
-    <span class="divisor">·</span>
-    <a href="/contato" class:list={{ ativo: pathname.startsWith('/contato') }}>Contato</a>
+  <nav class="nav-pill">
+    <a href="/servicos" class:list={{ ativo: pathname.startsWith('/servicos') }}>Serviços</a>
+    <a href="/projetos" class:list={{ ativo: pathname.startsWith('/projetos') }}>Projetos</a>
+    
+    <a href="/sobre" class:list={{ ativo: pathname.startsWith('/sobre') }}>Sobre</a>
+
+    <a href="/processo" class:list={{ ativo: pathname.startsWith('/processo') }}>Processo</a>
   </nav>
+
+  <div class="header-actions">
+    <a href="/contato" class="cta-button desktop-only">Entre em Contato</a>
+
+    <button id="menu-toggle" class="menu-toggle-button mobile-only" aria-label="Abrir menu" aria-expanded="false">
+      <svg class="icon-menu" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </div>
 </header>
 
+<div id="mobile-menu" class="mobile-menu" data-visible="false">
+  <nav>
+    <a href="/servicos">Serviços</a>
+    <a href="/projetos">Projetos</a>
+    <a href="/sobre">Sobre</a>
+    <a href="/processo">Processo</a>
+    <a href="/contato" class="cta-button-mobile">Entre em Contato</a>
+  </nav>
+</div>
+
+<script>
+  // Script para controlar o menu hambúrguer
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      const isVisible = mobileMenu.getAttribute('data-visible') === 'true';
+      
+      mobileMenu.setAttribute('data-visible', String(!isVisible));
+      menuToggle.setAttribute('aria-expanded', String(!isVisible));
+      
+      document.body.classList.toggle('no-scroll', !isVisible);
+    });
+  }
+</script>
+
 <style>
-  .site-header {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr; /* Esquerda | Centro (automático) | Direita */
-    align-items: center;
-    padding: 24px 0;
-    font-weight: 500;
-  }
+  .site-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; border-bottom: 1px solid rgba(55, 65, 81, 0.5); }
+  .header-logo { flex: 1; justify-content: flex-start; }
+  .nav-pill { flex: 2; display: flex; justify-content: center; }
+  .header-actions { flex: 1; display: flex; justify-content: flex-end; }
+  .header-logo img { height: 80px; width: auto; }
+  .nav-pill { background-color: #111113; padding: 8px 16px; border-radius: 9999px; border: 1px solid #2d2d30; gap: 8px; }
+  .nav-pill a { color: var(--cor-texto-secundario, #a0a0a0); text-decoration: none; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease; font-size: 0.9rem; font-weight: 500; }
+  .nav-pill a:hover { color: var(--cor-texto-principal, #ffffff); background-color: #27272a; }
+  .nav-pill a.ativo { color: var(--cor-texto-principal, #ffffff); background-color: var(--cor-destaque, #3b82f6); }
+  .cta-button { background-color: var(--cor-destaque, #3b82f6); color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background-color 0.3s; }
+  .cta-button:hover { background-color: #2563eb; }
+  .menu-toggle-button { display: none; }
+  .icon-close { display: none; }
+  .mobile-menu { display: none; }
 
-  /* Alinhamento das NAVs */
-  .nav-esquerda {
-    justify-self: end; /* Alinha à direita da sua coluna */
-    text-align: right;
-  }
-  .nav-direita {
-    justify-self: start; /* Alinha à esquerda da sua coluna */
-  }
-
-  /* Estilo dos links */
-  .nav-esquerda, .nav-direita {
-    display: flex;
-    align-items: center;
-    gap: 80px;
-  }
-  .nav-esquerda a, .nav-direita a {
-    color: var(--cor-texto-secundario);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .nav-esquerda a:hover, .nav-direita a:hover {
-    color: var(--cor-texto-principal);
-  }
-
-  /* Estilo do link ATIVO */
-  a.ativo {
-    color: var(--cor-destaque);
-    font-weight: 700;
-  }
-
-  /* Estilo da Logo */
-  .nav-logo a {
-    display: block;
-    padding: 0 80px; /* Espaçamento da logo para os links */
-  }
-  .nav-logo img {
-    height: 110px; /* Ajuste a altura da sua logo */
-    width: auto;
-    display: block;
-  }
-
-  /* Divisor */
-  .divisor {
-    color: #374151; /* Cor sutil para o divisor */
-  }
-
-  /* Responsividade para o Header */
-  @media (max-width: 768px) {
-    .site-header {
-      grid-template-columns: 1fr; /* Empilha tudo em uma coluna */
-      gap: 20px;
-      justify-items: center;
-    }
-    .nav-logo {
-      order: -1; /* Coloca a logo no topo em telas pequenas */
-      padding: 0;
-    }
-    .nav-esquerda, .nav-direita {
-      justify-self: center;
-    }
+  @media (max-width: 900px) {
+    .nav-pill { display: none; }
+    .desktop-only { display: none; }
+    .menu-toggle-button { display: block; background: none; border: none; color: var(--cor-texto-principal, #fff); cursor: pointer; }
+    .menu-toggle-button[aria-expanded="true"] .icon-menu { display: none; }
+    .menu-toggle-button[aria-expanded="true"] .icon-close { display: block; }
+    .mobile-menu { display: block; position: fixed; top: 73px; left: 0; right: 0; bottom: 0; background: rgba(17, 17, 19, 0.98); backdrop-filter: blur(10px); transform: translateX(-100%); transition: transform 0.3s ease-in-out; padding: 40px; }
+    .mobile-menu[data-visible="true"] { transform: translateX(0); }
+    body.no-scroll { overflow: hidden; }
+    .mobile-menu nav { display: flex; flex-direction: column; gap: 20px; text-align: center; }
+    .mobile-menu nav a { color: var(--cor-texto-principal, #fff); text-decoration: none; font-size: 1.5rem; padding: 10px; }
+    .cta-button-mobile { background: var(--cor-destaque, #3b82f6); border-radius: 8px; margin-top: 20px; }
   }
 </style>

@@ -1,62 +1,47 @@
 ---
-// src/pages/index.astro - COM O NOVO LAYOUT HÍBRIDO
+// src/pages/index.astro - VERSÃO REATORADA
 
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Sobre from '../components/Sobre.astro';
 import EquipeHomepage from '../components/EquipeHomepage.astro';
 import DestaqueDinamico from '../components/DestaqueDinamico.astro';
-
 ---
 
 <Layout>
-  <section class="secao-hero-grid" transition:animate="fade">
-    <div class="hero-content">
-      <Hero transition:animate="fade" />
-    </div>
-    <div class="destaque-content">
-      <DestaqueDinamico transition:animate="fade"/>
-    </div>
-  </section>
+  <Hero
+    titulo="GL Technology"
+    descricao="Nós somos a parceira de tecnologia que sua empresa precisa para decolar no cenário digital. Da arquitetura de infraestrutura robusta ao desenvolvimento de aplicativos de alta performance. Entregamos um ecossistema digital completo e sob medida para o seu sucesso."
+    textoBotao="Conheça Nossos Projetos"
+    linkBotao="/projetos"
+    transition:animate="fade"
+  >
+    <DestaqueDinamico transition:animate="fade" />
+  </Hero>
 
   <hr class="divisor" />
 
-  <div transition:animate="fade">
-    <EquipeHomepage transition:animate="fade"/>
-    <Sobre transition:animate="fade"/>
-  </div>
+  <section transition:animate="fade">
+    <EquipeHomepage />
+  </section>
+
+  <section transition:animate="fade">
+  </section>
+
 </Layout>
 
 <style>
-  .secao-hero-grid {
-    display: grid;
-    /* Por padrão, temos 2 colunas */
-    grid-template-columns: 1.5fr 1fr;
-    gap: 40px;
-    align-items: center;
-    padding: 40px 0;
-  }
-
+  /* Como o layout do Hero foi movido para dentro do próprio componente,
+    o CSS aqui fica muito mais simples!
+  */
   .divisor {
     border: none;
     border-top: 1px solid #374151;
-    margin: 20px 0 60px 0;
+    margin: 60px 0; /* Aumentei um pouco a margem para mais respiro */
   }
 
-  /* --- A MÁGICA DA RESPONSIVIDADE ACONTECE AQUI --- */
-  /* Esta regra só será aplicada em telas com largura de 900px ou menos */
-  @media (max-width: 900px) {
-    .secao-hero-grid {
-      /* Muda o grid para ter apenas 1 coluna */
-      grid-template-columns: 1fr;
-      /* Podemos reduzir um pouco o espaçamento em telas menores */
-      gap: 30px;
-      text-align: center; /* Centraliza o texto do Hero no mobile */
-    }
-
-    .hero-content {
-        /* Garante um espaço entre o texto e a caixa dinâmica quando empilhados */
-        margin-bottom: 20px;
-    }
+  /* Adicionando um espaçamento entre as seções para não ficarem coladas */
+  section:not(:first-of-type) {
+    margin-top: 60px;
   }
 </style>

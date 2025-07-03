@@ -1,0 +1,17 @@
+---
+import PaginaInterna from '../../layouts/PaginaInterna.astro';
+---
+<PaginaInterna title="Mensagem Enviada!">
+  <div class="sucesso-container">
+    <h1>Obrigado pelo seu contato!</h1>
+    <p>Sua mensagem foi enviada com sucesso. Entraremos em contato o mais breve possível.</p>
+    <a href="/" class="botao-voltar">Voltar para a Home</a>
+  </div>
+</PaginaInterna>
+
+<style>
+  .sucesso-container { text-align: center; padding: 100px 0; }
+  h1 { font-size: 2.5rem; color: var(--cor-destaque); }
+  p { font-size: 1.2rem; color: var(--cor-texto-secundario); margin-bottom: 40px; }
+  .botao-voltar { background-color: var(--cor-destaque); color: var(--cor-fundo); padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; }
+</style>

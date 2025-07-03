@@ -1,9 +1,24 @@
 ---
-// src/pages/projetos.astro - com Intro e CTA
+// src/pages/projetos.astro - VERSÃO CORRIGIDA
 
 import PaginaInterna from '../layouts/PaginaInterna.astro';
 import Skills from '../components/Skills.astro';
 import Laboratorio from '../components/Laboratorio.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Depoimentos from '../components/Depoimentos.astro';
+
+const todosProjetos = await getCollection('projetos');
+
+// Ordenação segura, lidando com datas opcionais
+todosProjetos.sort((a: CollectionEntry<'projetos'>, b: CollectionEntry<'projetos'>) => {
+  // Tenta pegar a data de 'b'. Se não existir, usa 0.
+  const dateB = b.data.data?.getTime() || 0;
+  // Tenta pegar a data de 'a'. Se não existir, usa 0.
+  const dateA = a.data.data?.getTime() || 0;
+
+  // Compara os números, garantindo que nunca haverá um erro.
+  return dateB - dateA;
+});
 ---
 
 <PaginaInterna>
@@ -11,15 +26,20 @@ import Laboratorio from '../components/Laboratorio.astro';
     <h1>Nosso Trabalho & Nossas Ferramentas</h1>
     <p>Aqui você pode explorar alguns dos projetos que tivemos o prazer de desenvolver e as tecnologias que dominamos para criar soluções de alto impacto.</p>
   </div>
+
+
+  <Laboratorio projetos={todosProjetos} transition:animate="fade" />
+
   <Skills transition:animate="fade"/>
-  <Laboratorio transition:animate="fade" />
+
+  <Depoimentos transition:animate="fade" /> <section class="cta-final">
 
   <section class="cta-final">
     <h2>Gostou do que viu?</h2>
     <p>Vamos conversar sobre como podemos aplicar nossa expertise no seu próximo projeto.</p>
     <a href="/contato" class="botao-cta">Entre em Contato</a>
   </section>
-  </PaginaInterna>
+</PaginaInterna>
 
 <style>
   .pagina-header {
@@ -36,7 +56,6 @@ import Laboratorio from '../components/Laboratorio.astro';
     color: var(--cor-texto-secundario);
     line-height: 1.7;
   }
-
   .cta-final {
     text-align: center;
     background-color: var(--cor-fundo-secundario);

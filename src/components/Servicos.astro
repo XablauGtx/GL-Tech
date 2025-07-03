@@ -1,22 +1,26 @@
 ---
-// src/components/Servicos.astro - VERSÃO ATUALIZADA E COMPLETA
+// src/components/Servicos.astro - CONECTADO AOS PROJETOS
 import { Icon } from 'astro-icon/components';
 
 const servicos = [
   {
     icone: 'mdi:server-network',
     titulo: 'Infraestrutura Cloud & DevOps',
-    descricao: 'Projetamos e gerenciamos arquiteturas na nuvem (AWS, Google Cloud) que são seguras, escaláveis e de alta disponibilidade. Garantimos que sua operação digital esteja sempre no ar e pronta para crescer.'
+    descricao: 'Projetamos e gerenciamos arquiteturas na nuvem (AWS, Google Cloud) que são seguras, escaláveis e de alta disponibilidade. Garantimos que sua operação digital esteja sempre no ar e pronta para crescer.',
+    filtro: 'infra', // Categoria correspondente nos projetos (sugestão)
   },
   {
     icone: 'mdi:code-braces',
     titulo: 'Desenvolvimento Web & Mobile',
-    descricao: 'Construímos plataformas, e-commerces e aplicativos sob medida que funcionam perfeitamente em qualquer dispositivo. Do back-end robusto ao front-end interativo, transformamos sua visão em código.'
+    descricao: 'Construímos plataformas, e-commerces e aplicativos sob medida que funcionam perfeitamente em qualquer dispositivo. Do back-end robusto ao front-end interativo, transformamos sua visão em código.',
+    // O valor do filtro deve ser igual ao 'data-categoria' no Laboratorio
+    filtro: 'web', 
   },
   {
     icone: 'mdi:palette-swatch-outline',
     titulo: 'Design Digital & Conteúdo Multimídia',
-    descricao: 'Criamos a identidade visual completa para sua marca. Da criação de interfaces (UI/UX) à produção e edição de fotos e vídeos de alto impacto, comunicamos sua mensagem da forma mais eficaz.'
+    descricao: 'Criamos a identidade visual completa para sua marca. Da criação de interfaces (UI/UX) à produção e edição de fotos e vídeos de alto impacto, comunicamos sua mensagem da forma mais eficaz.',
+    filtro: 'design',
   }
 ];
 ---
@@ -28,22 +32,61 @@ const servicos = [
   <div class="servicos-grid">
     {servicos.map(servico => (
       <div class="servico-card">
-        <Icon name={servico.icone} class="servico-icone" />
-        <h3 class="servico-titulo">{servico.titulo}</h3>
-        <p class="servico-descricao">{servico.descricao}</p>
+        <div> {/* Div extra para controlar o layout com flexbox */}
+          <Icon name={servico.icone} class="servico-icone" />
+          <h3 class="servico-titulo">{servico.titulo}</h3>
+          <p class="servico-descricao">{servico.descricao}</p>
+        </div>
+        
+        {/* LINK ADICIONADO AQUI */}
+        <a href={`/projetos?categoria=${servico.filtro}`} class="servico-link">
+          Ver projetos relacionados
+          <Icon name="mdi:arrow-right" />
+        </a>
       </div>
     ))}
   </div>
 </section>
 
 <style>
-  /* Os estilos que você já tem funcionarão perfeitamente aqui */
+  /* Seus estilos existentes */
   .servicos-header { text-align: center; margin-bottom: 60px; }
   .titulo-pagina { font-size: 2.5rem; margin-bottom: 8px; }
   .subtitulo-pagina { font-size: 1.1rem; color: var(--cor-texto-secundario); max-width: 500px; margin: 0 auto; }
   .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
-  .servico-card { background-color: var(--cor-fundo-secundario); padding: 32px; border-radius: 8px; border-top: 4px solid var(--cor-destaque); }
+  
+  /* --- REFINAMENTOS NO CARD --- */
+  .servico-card {
+    background-color: var(--cor-fundo-secundario);
+    padding: 32px;
+    border-radius: 8px;
+    border-top: 4px solid var(--cor-destaque);
+    display: flex; /* Adicionado para o link no final */
+    flex-direction: column; /* Adicionado */
+    justify-content: space-between; /* Adicionado */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efeito hover */
+  }
+
+  .servico-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+
   .servico-icone { font-size: 3rem; color: var(--cor-destaque); margin-bottom: 16px; }
   .servico-titulo { font-size: 1.3rem; margin-top: 0; margin-bottom: 12px; }
-  .servico-descricao { color: var(--cor-texto-secundario); line-height: 1.7; }
+  .servico-descricao { color: var(--cor-texto-secundario); line-height: 1.7; margin-bottom: 24px; } /* Adicionado margin-bottom */
+
+  /* Estilo para o novo link */
+  .servico-link {
+    color: var(--cor-destaque);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto; /* Empurra o link para o final do card */
+  }
+  .servico-link:hover {
+    text-decoration: underline;
+  }
 </style>

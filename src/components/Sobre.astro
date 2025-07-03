@@ -1,89 +1,68 @@
 ---
-// src/components/Sobre.astro
-import { Icon } from 'astro-icon/components'; // Usaremos o astro-icon para os links
+// src/components/Sobre.astro - VERSÃO REFINADA
 ---
 <section class="sobre-section">
-  <h2 class="titulo-secao"># SOBRE</h2>
-  <div class="sobre-conteudo">
-    <div class="sobre-identidade">
-      <img src="/img/logo/logo.png" alt="Foto de perfil" class="foto-perfil">
-      <div class="social-links">
-        <a href="mailto:seu-email@exemplo.com" aria-label="Email">
-          <Icon name="mdi:email-outline" />
-        </a>
-        <a href="https://github.com/seu-usuario" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-          <Icon name="mdi:github" />
-        </a>
-        <a href="https://linkedin.com/in/seu-usuario" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-          <Icon name="mdi:linkedin" />
-        </a>
-      </div>
+  <div class="sobre-grid">
+    <div class="coluna-titulo">
+      <h2>Nossa<br>Missão.</h2>
     </div>
-    <div class="sobre-texto">
+    <div class="coluna-texto">
       <p>
-        A GL Technology nasceu da visão de que grandes ideias merecem uma execução impecável em todas as frentes. No mercado atual, percebemos que as empresas precisam mais do que um site: precisam de uma solução digital integrada.
-        Por isso, reunimos uma equipe de especialistas em infraestrutura, desenvolvimento web e mobile, e design multimídia.       </p>
+        A GL Technology nasceu da visão de que grandes ideias merecem uma execução técnica impecável. No mercado atual, percebemos que as empresas precisam mais do que um site ou um aplicativo: precisam de um ecossistema digital coeso e uma parceria de confiança para navegar no cenário tecnológico.
+      </p>
       <p>
-        Nosso propósito é ser esse parceiro único, oferecendo expertise e coesão em cada etapa da jornada digital do seu negócio, desde o servidor na nuvem até o vídeo final publicado nas suas redes.      </p>
+        Nosso propósito é ser esse parceiro estratégico. Unimos expertise em infraestrutura, desenvolvimento e design multimídia para oferecer soluções integradas que não apenas resolvem problemas, mas também criam oportunidades e impulsionam o crescimento sustentável dos nossos clientes.
+      </p>
     </div>
   </div>
 </section>
 
 <style>
   .sobre-section {
-    margin-top: 60px; /* Espaçamento para separar da seção Hero */
+    padding: 80px 0;
+    background-color: var(--cor-fundo-secundario);
+    border-radius: 12px;
   }
-
-  .titulo-secao {
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .coluna-titulo h2 {
+    font-size: clamp(2.5rem, 8vw, 4rem); /* Fonte fluida */
+    line-height: 1.1;
     color: var(--cor-destaque);
-    font-weight: 500;
-    margin-bottom: 24px;
+    margin: 0;
+    text-align: right;
+    border-right: 4px solid var(--cor-destaque);
+    padding-right: 24px;
   }
-
-  .sobre-conteudo {
-    display: flex;
-    gap: 32px;
-    align-items: flex-start;
-  }
-
-  .foto-perfil {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%; /* Deixa a imagem redonda */
-    object-fit: cover; /* Garante que a imagem não fique distorcida */
-    border: 3px solid var(--cor-destaque);
-  }
-
-  .sobre-identidade {
-    text-align: center;
-    flex-shrink: 0;
-  }
-
-  .sobre-identidade h3 {
-    margin-top: 16px;
-    margin-bottom: 8px;
-    font-size: 1.25rem;
-  }
-
-  .social-links {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-  }
-
-  .social-links a {
+  .coluna-texto p {
+    font-size: 1.1rem;
+    line-height: 1.8;
     color: var(--cor-texto-secundario);
-    font-size: 1.5rem; /* Tamanho dos ícones */
-    transition: color 0.3s;
+    max-width: 65ch; /* Limite de caracteres por linha para melhor legibilidade */
+  }
+  .coluna-texto p:last-child {
+    margin-bottom: 0;
   }
 
-  .social-links a:hover {
-    color: var(--cor-destaque);
-  }
-
-  .sobre-texto p {
-    color: var(--cor-texto-secundario);
-    line-height: 1.7; /* Altura da linha para melhor legibilidade */
-    margin-bottom: 16px;
+  @media (max-width: 768px) {
+    .sobre-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .coluna-titulo h2 {
+      text-align: center;
+      border-right: none;
+      border-bottom: 4px solid var(--cor-destaque);
+      padding-right: 0;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
   }
 </style>

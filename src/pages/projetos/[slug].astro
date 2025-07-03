@@ -1,0 +1,101 @@
+---
+// src/pages/projetos/[slug].astro
+
+import PaginaInterna from '../../layouts/PaginaInterna.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+
+// 1. GERA AS PÁGINAS EM TEMPO DE BUILD
+export async function getStaticPaths() {
+  const projetos = await getCollection('projetos');
+  return projetos.map(projeto => ({
+    params: { slug: projeto.slug },
+    props: { projeto },
+  }));
+}
+
+// 2. RECEBE OS DADOS DO PROJETO ATUAL
+type Props = {
+  projeto: CollectionEntry<'projetos'>;
+}
+const { projeto } = Astro.props;
+const { Content } = await projeto.render(); // Renderiza o conteúdo Markdown
+---
+
+<PaginaInterna title={projeto.data.titulo}>
+  <article class="case-study">
+    <header class="case-study-header">
+      <h1>{projeto.data.titulo}</h1>
+      <p class="categoria-header">{projeto.data.categoria}</p>
+      <img src={projeto.data.imagem} alt={`Imagem principal do projeto ${projeto.data.titulo}`} class="imagem-destaque"/>
+    </header>
+
+    <div class="case-study-body">
+      <main class="conteudo-principal">
+        <h2>O Desafio</h2>
+        <div class="prose">
+          <Content />
+        </div>
+      </main>
+      
+      <aside class="metadata-sidebar">
+        <div class="metadata-box">
+          <h3>Detalhes do Projeto</h3>
+          <ul>
+            {projeto.data.cliente && (
+              <li><strong>Cliente:</strong> {projeto.data.cliente}</li>
+            )}
+            <li><strong>Data:</strong> {projeto.data.data.toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' })}</li>
+            {projeto.data.servicos && (
+              <li><strong>Serviços:</strong> {projeto.data.servicos.join(', ')}</li>
+            )}
+          </ul>
+          
+          <h4>Tecnologias Utilizadas</h4>
+          <div class="tech-tags">
+            {projeto.data.tags.map(tag => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+
+          {projeto.data.link && (
+            <a href={projeto.data.link} class="botao-cta" target="_blank" rel="noopener noreferrer">
+              Ver Projeto ao Vivo <Icon name="mdi:arrow-top-right-thin" />
+            </a>
+          )}
+        </div>
+      </aside>
+    </div>
+  </article>
+</PaginaInterna>
+
+<style>
+  .case-study-header { text-align: center; margin-bottom: 60px; }
+  .case-study-header h1 { font-size: 3rem; margin-bottom: 8px; }
+  .categoria-header { color: var(--cor-destaque); font-weight: 500; margin-bottom: 32px; }
+  .imagem-destaque { width: 100%; max-width: 900px; border-radius: 8px; margin: 0 auto; }
+
+  .case-study-body { display: grid; grid-template-columns: 2fr 1fr; gap: 60px; }
+  .conteudo-principal h2 { margin-top: 0; font-size: 1.8rem; margin-bottom: 16px; }
+  
+  .prose { font-size: 1.1rem; line-height: 1.8; color: var(--cor-texto-secundario); }
+  .prose :global(p) { margin-bottom: 1em; }
+  .prose :global(h3) { font-size: 1.5rem; margin-top: 2em; margin-bottom: 0.5em; color: var(--cor-texto-principal); }
+
+  .metadata-sidebar .metadata-box { background-color: var(--cor-fundo-secundario); padding: 24px; border-radius: 8px; position: sticky; top: 120px; }
+  .metadata-box h3, .metadata-box h4 { margin: 0 0 16px 0; color: var(--cor-texto-principal); }
+  .metadata-box ul { list-style: none; padding: 0; margin: 0 0 24px 0; }
+  .metadata-box li { margin-bottom: 12px; color: var(--cor-texto-secundario); }
+  .metadata-box strong { color: var(--cor-texto-principal); font-weight: 500; }
+  .tech-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .tag { background-color: var(--cor-destaque); color: var(--cor-fundo); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
+
+  .botao-cta { display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center; background-color: var(--cor-destaque); color: var(--cor-fundo); padding: 12px; border-radius: 4px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+  .botao-cta:hover { background-color: #3b82f6; transform: scale(1.03); }
+
+  @media (max-width: 900px) {
+    .case-study-body { grid-template-columns: 1fr; }
+    .metadata-sidebar { order: -1; margin-bottom: 40px; }
+    .metadata-sidebar .metadata-box { position: static; }
+  }
+</style>

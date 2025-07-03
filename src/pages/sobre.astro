@@ -1,0 +1,37 @@
+---
+// src/pages/sobre.astro - CORRIGIDO
+
+import PaginaInterna from '../layouts/PaginaInterna.astro';
+// 1. Renomeamos a importação para evitar conflito de nomes
+import SobreComponente from '../components/Sobre.astro'; 
+import EquipeHomepage from '../components/EquipeHomepage.astro';
+import ContatoCTA from '../components/ContatoCTA.astro';
+---
+
+<PaginaInterna title="Sobre Nós | GL Technology">
+  <div class="pagina-header">
+    <h1>Acreditamos em Tecnologia com Propósito</h1>
+    <p>Conheça a filosofia que nos move e as pessoas que fazem acontecer.</p>
+  </div>
+
+  <SobreComponente />
+  
+  <ContatoCTA />
+</PaginaInterna>
+
+<style>
+  .pagina-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 80px auto;
+  }
+  .pagina-header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 16px;
+  }
+  .pagina-header p {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.7;
+  }
+</style>

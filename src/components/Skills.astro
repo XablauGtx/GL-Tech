@@ -1,33 +1,37 @@
 ---
-// src/components/Skills.astro - NOVO DESIGN HORIZONTAL
+// src/components/Skills.astro - DESIGN RECOMENDADO "TECH STACK"
 import { Icon } from 'astro-icon/components';
 
+// Removemos a propriedade 'nivel'. Agora é apenas uma lista de tecnologias.
 const skills = [
-  { nome: 'CSS3', icone: 'simple-icons:css3', nivel: '90%' },
-  { nome: 'Vue.js', icone: 'simple-icons:vuedotjs', nivel: '85%' }, // CORRIGIDO
-  { nome: 'PostgreSQL', icone: 'simple-icons:postgresql', nivel: '75%' },
-  { nome: 'JavaScript', icone: 'simple-icons:javascript', nivel: '90%' },
-  // Adicione suas outras skills aqui, sempre buscando o nome correto do ícone
+  { nome: 'JavaScript', icone: 'simple-icons:javascript' },
+  { nome: 'TypeScript', icone: 'simple-icons:typescript' },
+  { nome: 'Vue.js', icone: 'simple-icons:vuedotjs' },
+  { nome: 'React', icone: 'simple-icons:react' },
+  { nome: 'Astro', icone: 'simple-icons:astro' },
+  { nome: 'Node.js', icone: 'simple-icons:nodedotjs' },
+  { nome: 'PostgreSQL', icone: 'simple-icons:postgresql' },
+  { nome: 'Figma', icone: 'simple-icons:figma' },
+  { nome: 'CSS3', icone: 'simple-icons:css3' },
+  { nome: 'HTML5', icone: 'simple-icons:html5' },
 ];
-  // Adicione suas outras skills aqui
 ---
 <section class="skills-section">
-  <h2 class="titulo-secao">Skills</h2>
+  <h2 class="titulo-secao">Nossas Ferramentas</h2>
   <div class="skills-grid">
     {skills.map(skill => (
       <div class="skill-card">
-        <span class="skill-nome">{skill.nome}</span>
         <Icon name={skill.icone} class="skill-icone" />
-        <div class="skill-bar-container">
-          <div class="skill-bar-level" style={`width: ${skill.nivel};`}></div>
-        </div>
+        <span class="skill-nome">{skill.nome}</span>
       </div>
     ))}
   </div>
 </section>
 
 <style>
-  .skills-section { margin-bottom: 80px; }
+  .skills-section {
+    margin-bottom: 80px;
+  }
   .titulo-secao {
     display: inline-flex;
     align-items: center;
@@ -36,7 +40,6 @@ const skills = [
     color: var(--cor-texto-principal);
     margin-bottom: 32px;
   }
-  /* O ícone quadrado ao lado do título */
   .titulo-secao::before {
     content: '';
     display: block;
@@ -44,24 +47,40 @@ const skills = [
     height: 10px;
     background-color: var(--cor-destaque);
   }
+
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 30px;
+    /* Aumentei um pouco o minmax para dar mais espaço */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 40px 30px; /* Mais espaço vertical */
   }
+
   .skill-card {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px; /* Espaço entre o ícone e o nome */
+    transition: transform 0.3s ease;
   }
+
+  .skill-card:hover {
+    transform: scale(1.1);
+  }
+  
+  .skill-icone {
+    font-size: 3.5rem; /* Ícones um pouco maiores */
+    color: var(--cor-texto-secundario);
+    transition: color 0.3s ease;
+  }
+
+  .skill-card:hover .skill-icone {
+    color: var(--cor-destaque); /* Muda a cor do ícone no hover */
+  }
+
   .skill-nome {
     font-size: 0.9rem;
-    color: var(--cor-texto-secundario);
-    display: block;
-    margin-bottom: 12px;
+    font-weight: 500;
+    color: var(--cor-texto-principal);
   }
-  .skill-icone {
-    font-size: 3rem; /* Tamanho do ícone */
-    margin-bottom: 12px;
-  }
-  .skill-bar-container { width: 100%; height: 6px; background-color: var(--cor-fundo-secundario); border-radius: 3px; }
-  .skill-bar-level { height: 100%; background-color: var(--cor-destaque); border-radius: 3px; }
 </style>

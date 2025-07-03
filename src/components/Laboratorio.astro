@@ -1,65 +1,43 @@
 ---
-// Arquivo: src/components/Laboratorio.astro
-// Versão completa com layout em grade, cards e filtro interativo
+// src/components/Laboratorio.astro - VERSÃO COMPLETA E ATUALIZADA
 
-import { Icon } from 'astro-icon/components';
+import type { CollectionEntry } from 'astro:content';
 
-const projetos = [
-  {
-    titulo: 'GL Tech - Website Institucional',
-    categoria: 'Web',
-    descricao: 'Desenvolvimento completo do nosso site institucional com Astro, focado em performance e interatividade para apresentar nossas capacidades.',
-    imagem: '/img/equipe/gustavob.jpg', // Troque pela imagem do projeto
-    link: '#', // Coloque o link do projeto aqui
-    tags: ['Astro', 'UI/UX', 'SEO'],
-  },
-  {
-    titulo: 'Plataforma de E-learning',
-    categoria: 'Web',
-    descricao: 'Criação de uma plataforma de cursos online com área de membros, upload de vídeos e integração de pagamentos para um cliente da área de educação.',
-    imagem: '/projetos/loja-virtual.png', // Troque pela imagem do projeto
-    link: '#',
-    tags: ['React', 'Node.js', 'Stripe'],
-  },
-  {
-    titulo: 'Identidade Visual - Fintech',
-    categoria: 'Design',
-    descricao: 'Criação de identidade visual completa, incluindo logo, paleta de cores, tipografia e guia de estilo para uma startup do setor financeiro.',
-    imagem: '/projetos/app-tarefas.jpg', // Troque pela imagem do projeto
-    link: '#',
-    tags: ['Figma', 'Illustrator', 'Branding'],
-  },
-  {
-    titulo: 'App de Logística e Entregas',
-    categoria: 'Mobile',
-    descricao: 'Aplicativo mobile para iOS e Android para gerenciamento de rotas e entregas em tempo real, otimizando a operação de uma grande transportadora.',
-    imagem: '/projetos/projeto-1.jpg', // Troque pela imagem do projeto
-    link: '#',
-    tags: ['React Native', 'Firebase', 'Google Maps API'],
-  },
-];
-// ------------------------------------
+interface Props {
+  projetos: CollectionEntry<'projetos'>[];
+}
+
+const { projetos } = Astro.props;
+
+// Gera a lista de filtros dinamicamente a partir das categorias dos projetos
+const categorias = ['Todos', ...new Set(projetos.map(p => p.data.categoria))];
 ---
+
 <section class="laboratorio-section">
   <div class="laboratorio-header">
     <h2 class="titulo-secao"># Laboratório</h2>
     <div class="filtros">
-      <button class="filtro-btn ativo" data-categoria="todos">Todos</button>
-      <button class="filtro-btn" data-categoria="Web">Web</button>
-      <button class="filtro-btn" data-categoria="Mobile">Mobile</button>
-      <button class="filtro-btn" data-categoria="Design">Design</button>
+      {categorias.map(categoria => (
+        <button class:list={["filtro-btn", {ativo: categoria === 'Todos'}]} data-categoria={categoria.toLowerCase()}>
+          {categoria}
+        </button>
+      ))}
     </div>
   </div>
 
   <div class="projetos-container">
     {projetos.map(projeto => (
-      <a href={projeto.link} target="_blank" rel="noopener noreferrer" class="projeto-card" data-categoria={projeto.categoria}>
-        <img src={projeto.imagem} alt={`Imagem do projeto ${projeto.titulo}`} class="projeto-imagem" />
+      // ATUALIZAÇÃO 1: O link agora aponta para a página de detalhe do projeto.
+      <a href={`/projetos/${projeto.slug}`} class="projeto-card" data-categoria={projeto.data.categoria.toLowerCase()}>
+        <img src={projeto.data.imagem} alt={`Imagem do projeto ${projeto.data.titulo}`} class="projeto-imagem" />
         <div class="projeto-info">
-          <h3>{projeto.titulo}</h3>
-          <p>{projeto.descricao}</p>
+          <h3>{projeto.data.titulo}</h3>
+          
+          {/* ATUALIZAÇÃO 2: Usando o campo 'resumo' para o card. O 'body' completo fica para a página de detalhe. */}
+          <p>{projeto.data.resumo}</p>
+          
           <div class="projeto-tags">
-            {projeto.tags.map(tag => (
+            {projeto.data.tags.map((tag: string) => (
               <span class="tag">{tag}</span>
             ))}
           </div>
@@ -70,33 +48,58 @@ const projetos = [
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const botoesFiltro = document.querySelectorAll('.filtro-btn');
-    
-    // A CORREÇÃO ESTÁ AQUI 👇
-    const cardsProjeto = document.querySelectorAll<HTMLElement>('.projeto-card');
+   const botoesFiltro = document.querySelectorAll('.filtro-btn');
+  const cardsProjeto = document.querySelectorAll<HTMLElement>('.projeto-card');
 
-    botoesFiltro.forEach(botao => {
-      botao.addEventListener('click', () => {
-        botoesFiltro.forEach(btn => btn.classList.remove('ativo'));
-        botao.classList.add('ativo');
+  // Função para filtrar os cards, agora reutilizável
+  function filtrarProjetos(categoriaSelecionada: string) {
+    cardsProjeto.forEach(card => {
+      const categoriaCard = card.getAttribute('data-categoria');
+      if (categoriaSelecionada === 'todos' || categoriaSelecionada === categoriaCard) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
 
-        const categoriaSelecionada = botao.getAttribute('data-categoria');
+    // Atualiza o botão ativo
+    botoesFiltro.forEach(btn => {
+      if (btn.getAttribute('data-categoria') === categoriaSelecionada) {
+        btn.classList.add('ativo');
+      } else {
+        btn.classList.remove('ativo');
+      }
+    });
+  }
 
-        cardsProjeto.forEach(card => {
-          // Agora o TypeScript sabe que 'card' é um HTMLElement e tem a propriedade .style
-          const categoriaCard = card.getAttribute('data-categoria');
-          if (categoriaSelecionada === 'todos' || categoriaSelecionada === categoriaCard) {
-            card.style.display = 'block';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
+  // Lógica de clique nos botões
+  botoesFiltro.forEach(botao => {
+    botao.addEventListener('click', (event) => {
+      event.preventDefault();
+      const categoria = botao.getAttribute('data-categoria');
+      if (categoria) {
+        filtrarProjetos(categoria);
+        // Opcional: atualiza a URL sem recarregar a página
+        const novaUrl = new URL(window.location.href);
+        novaUrl.searchParams.set('categoria', categoria);
+        window.history.pushState({}, '', novaUrl);
+      }
     });
   });
-</script>
 
+  // --- NOVO CÓDIGO AQUI ---
+  // Verifica se existe um filtro na URL quando a página carrega
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const categoriaUrl = params.get('categoria');
+    
+    if (categoriaUrl) {
+      // Se encontrou uma categoria na URL, aplica o filtro
+      filtrarProjetos(categoriaUrl);
+    }
+  });
+
+</script>
 
 <style>
   .laboratorio-header {
@@ -107,8 +110,15 @@ const projetos = [
     flex-wrap: wrap;
     gap: 16px;
   }
-  .titulo-secao { color: var(--cor-destaque); font-weight: 500; margin: 0; }
-  .filtros { display: flex; gap: 12px; }
+  .titulo-secao {
+    color: var(--cor-destaque);
+    font-weight: 500;
+    margin: 0;
+  }
+  .filtros {
+    display: flex;
+    gap: 12px;
+  }
   .filtro-btn {
     background-color: transparent;
     border: 1px solid #374151;
@@ -119,22 +129,100 @@ const projetos = [
     font-weight: 500;
     transition: all 0.3s;
   }
-  .filtro-btn:hover { background-color: #374151; color: var(--cor-texto-principal); }
-  .filtro-btn.ativo { background-color: var(--cor-destaque); color: var(--cor-fundo); border-color: var(--cor-destaque); }
+  .filtro-btn:hover {
+    background-color: #374151;
+    color: var(--cor-texto-principal);
+  }
+  .filtro-btn.ativo {
+    background-color: var(--cor-destaque);
+    color: var(--cor-fundo);
+    border-color: var(--cor-destaque);
+  }
 
   .projetos-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
   }
-  .projeto-card { background-color: var(--cor-fundo-secundario); border-radius: 8px; overflow: hidden; text-decoration: none; color: var(--cor-texto-principal); display: block; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-  .projeto-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-  .projeto-imagem { width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; }
-  .projeto-card:hover .projeto-imagem {transform: scale(1.05);}
-  .projeto-info { padding: 20px; }
-  .projeto-info h3 { margin: 0 0 8px 0; font-size: 1.2rem; }
-  .projeto-info p { margin: 0 0 16px 0; color: var(--cor-texto-secundario); font-size: 0.9rem; line-height: 1.6; }
-  .projeto-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .tag { background-color: var(--cor-destaque); color: var(--cor-fundo); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 500; transition: transform 0.3s ease; }
-  .projeto-card:hover .tag {transform: translateY(-2px);}
+  
+  .projeto-card {
+    background-color: var(--cor-fundo-secundario);
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--cor-texto-principal);
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease, max-height 0.6s ease-in-out;
+  }
+
+  /* Classe para a animação do filtro */
+  .projeto-card.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: -30px; /* Compensa o 'gap' da grid para um colapso suave */
+    overflow: hidden;
+    pointer-events: none; /* Impede interações com o card escondido */
+  }
+
+  .projeto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+  
+  .projeto-imagem {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  
+  .projeto-card:hover .projeto-imagem {
+    transform: scale(1.05);
+  }
+  
+  .projeto-info {
+    padding: 20px;
+  }
+  
+  .projeto-info h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+  }
+  
+  .projeto-info p {
+    margin: 0 0 16px 0;
+    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    /* Garante que o resumo não quebre o layout do card */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 54px; /* Aprox. 3 linhas de texto */
+  }
+  
+  .projeto-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .tag {
+    background-color: var(--cor-destaque);
+    color: var(--cor-fundo);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+  }
+
+  .projeto-card:hover .tag {
+    transform: translateY(-2px);
+  }
 </style>
