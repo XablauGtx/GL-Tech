@@ -1,0 +1,48 @@
+---
+// src/components/SEO.astro
+import { SEO as AstroSEO } from "astro-seo";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+// Valores padrão caso nenhuma prop seja passada
+const {
+  title = "GL Technology - Soluções Digitais Completas",
+  description = "Da infraestrutura à interface, criamos soluções digitais robustas e sob medida para o seu sucesso.",
+  image = "/og-image.png", // Imagem padrão para compartilhamento
+} = Astro.props;
+
+// Gera a URL completa e absoluta para a imagem de compartilhamento
+const imageUrl = new URL(image, Astro.site).href;
+---
+
+<AstroSEO
+  title={title}
+  description={description}
+  canonical={new URL(Astro.url.pathname, Astro.site).href}
+  openGraph={{
+    basic: {
+      title: title,
+      type: "website",
+      image: imageUrl,
+      url: new URL(Astro.url.pathname, Astro.site).href,
+    },
+    image: {
+      alt: `Imagem de destaque para ${title}`,
+    },
+    optional: {
+      description: description,
+      siteName: "GL Technology",
+    }
+  }}
+  twitter={{
+    card: "summary_large_image",
+    title: title,
+    description: description,
+    image: imageUrl,
+    imageAlt: `Imagem de destaque para ${title}`,
+  }}
+/>

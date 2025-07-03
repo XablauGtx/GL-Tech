@@ -1,56 +1,17 @@
 ---
-// src/layouts/PaginaInterna.astro
-import Header from '../components/Header.astro';
-import { ViewTransitions } from 'astro:transitions';
+// Arquivo: src/layouts/PaginaInterna.astro (VERSÃO CORRIGIDA E SIMPLIFICADA)
+
+// 1. Ele apenas importa o Layout principal.
+import Layout from './Layout.astro';
+
+// 2. Ele recebe as props (como o título) para passar para o Layout principal.
+interface Props {
+	title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
 ---
-<html lang="pt-br">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <title>GL Technology</title>
-    <ViewTransitions />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-  </head>
 
-    <div class="site-container">
-      <Header /> 
-      <main class="conteudo-principal">
-        <slot />
-      </main>
-    </div>
-  </body>
-</html>
-<style is:global>
-  :root {
-    --cor-fundo: #2a303c;
-    --cor-fundo-secundario: #1e222a;
-    --cor-texto-principal: #e2e8f0;
-    --cor-texto-secundario: #94a3b8;
-    --cor-destaque: #00c8ff;
-  }
-  body {
-    color: var(--cor-texto-principal);
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    background-color: var(--cor-fundo);
-    
-    /* MUDANÇA 2: Usamos a variável CSS aqui */
-    background-image: linear-gradient(rgba(20, 23, 29, 0.9), rgba(20, 23, 29, 0.9)), url('/background.png');
-
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-  }
-  .site-container {
-     max-width: 1100px;
-     margin: 0 auto;
-     padding: 0 40px;
-  }
-  .conteudo-principal {
-    padding: 40px 0;
-  }
-</style>
+<Layout title={title} description={description}>
+  <slot />
+</Layout>

@@ -1,9 +1,8 @@
-// @ts-check
+// Arquivo: astro.config.mjs (VERSÃO CORRETA)
 import { defineConfig } from 'astro/config';
-import icon from "astro-icon"; 
+import icon from "astro-icon";
 
-// https://astro.build/config
 export default defineConfig({
-    integrations: [icon()]
+  site: 'https://statuesque-khapse-6a57a2.netlify.app/',
+  integrations: [icon()] // Apenas a integração de ícones
 });
-
