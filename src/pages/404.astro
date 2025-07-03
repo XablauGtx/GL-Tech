@@ -1,0 +1,110 @@
+---
+// src/pages/404.astro
+import PaginaInterna from '../layouts/PaginaInterna.astro';
+import { Icon } from 'astro-icon/components';
+---
+
+<PaginaInterna title="404 - Página Não Encontrada">
+  <div class="container-404">
+    <div class="texto-404">
+      <span class="codigo-erro">404</span>
+      <h1 class="titulo-erro">Ops! Parece que você se perdeu.</h1>
+      <p class="descricao-erro">
+        A página que você está procurando não foi encontrada. Ela pode ter sido movida, removida ou talvez você tenha digitado o endereço incorretamente.
+      </p>
+      <div class="acoes-404">
+        <a href="/" class="botao-principal">
+          <Icon name="mdi:home" /> Ir para a Página Inicial
+        </a>
+        <a href="/projetos" class="botao-secundario">
+          Ver Nossos Projetos
+        </a>
+      </div>
+    </div>
+    <div class="ilustracao-404">
+      <Icon name="mdi:compass-off-outline" />
+    </div>
+  </div>
+</PaginaInterna>
+
+<style>
+  .container-404 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+    min-height: 70vh;
+    padding: 40px 0;
+    text-align: left;
+  }
+  .ilustracao-404 {
+    font-size: 20rem; /* Tamanho do ícone gigante */
+    color: var(--cor-fundo-secundario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .codigo-erro {
+    color: var(--cor-destaque);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .titulo-erro {
+    font-size: 3rem;
+    margin: 8px 0 16px 0;
+  }
+  .descricao-erro {
+    color: var(--cor-texto-secundario);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 50ch;
+  }
+  .acoes-404 {
+    margin-top: 32px;
+    display: flex;
+    gap: 16px;
+  }
+  .botao-principal, .botao-secundario {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .botao-principal {
+    background-color: var(--cor-destaque);
+    color: var(--cor-fundo);
+  }
+  .botao-principal:hover {
+    opacity: 0.9;
+  }
+  .botao-secundario {
+    background-color: var(--cor-fundo-secundario);
+    color: var(--cor-texto-principal);
+  }
+  .botao-secundario:hover {
+    background-color: #374151; /* Um pouco mais escuro */
+  }
+
+  @media (max-width: 900px) {
+    .container-404 {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .ilustracao-404 {
+      order: -1; /* Coloca a ilustração no topo */
+      font-size: 12rem;
+      margin-bottom: 24px;
+    }
+    .acoes-404 {
+      justify-content: center;
+    }
+    .descricao-erro {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+</style>
