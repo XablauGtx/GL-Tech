@@ -58,45 +58,197 @@ import { LISTA_DE_SERVICOS } from '../data/servicos';
 </section>
 
 <style>
- .contato-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: flex-start; }
- .tag-contato { display: inline-block; background-color: var(--cor-fundo-secundario); color: var(--cor-destaque); padding: 8px 16px; border-radius: 6px; font-weight: 500; margin-bottom: 24px; }
- .titulo-principal { font-size: 3.5rem; margin: 0 0 24px 0; }
- .descricao { color: var(--cor-texto-secundario); line-height: 1.8; font-size: 1.1rem; }
- .contato-manual { margin-top: 40px; border-top: 1px solid #374151; padding-top: 24px; }
- .contato-manual p { margin: 0 0 8px 0; color: var(--cor-texto-secundario); }
- .contato-manual a { color: var(--cor-texto-principal); font-weight: 500; font-size: 1.1rem; text-decoration: none; }
- .form-col { background-color: var(--cor-fundo-secundario); padding: 40px; border-radius: 12px; }
- .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
- .form-group { margin-bottom: 24px; }
- .form-group label { display: block; margin-bottom: 10px; font-weight: 500; }
- .form-group input[type="text"], .form-group input[type="email"], .form-group textarea { width: 100%; box-sizing: border-box; background-color: var(--cor-fundo); border: 1px solid #374151; border-radius: 8px; padding: 14px; color: var(--cor-texto-principal); font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
- .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--cor-destaque); box-shadow: 0 0 0 3px rgba(0, 200, 255, 0.2); }
- .botao-enviar { width: 100%; background-color: var(--cor-destaque); color: var(--cor-fundo); border: none; padding: 16px; font-size: 1.1rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: opacity 0.3s; }
- .botao-enviar:hover { opacity: 0.9; }
- .hidden { display: none; }
- @media (max-width: 900px) { .contato-grid { grid-template-columns: 1fr; } }
- .checkbox-group { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
- .checkbox-group label { display: flex; align-items: center; gap: 12px; background-color: var(--cor-fundo); padding: 12px; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; position: relative; }
- .checkbox-group label:hover { background-color: #2a303c; }
- .checkbox-group input[type="checkbox"] { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
- .custom-checkbox { height: 20px; width: 20px; background-color: var(--cor-fundo); border: 2px solid #374151; border-radius: 4px; transition: all 0.2s ease-in-out; flex-shrink: 0; position: relative; }
- .checkbox-group label:hover .custom-checkbox { border-color: var(--cor-destaque); }
- .checkbox-group input[type="checkbox"]:checked ~ .custom-checkbox { background-color: var(--cor-destaque); border-color: var(--cor-destaque); }
- .custom-checkbox::after { content: ""; position: absolute; display: none; }
- .checkbox-group input[type="checkbox"]:checked ~ .custom-checkbox::after { display: block; }
- .custom-checkbox::after { left: 6px; top: 2px; width: 5px; height: 10px; border: solid var(--cor-fundo); border-width: 0 3px 3px 0; transform: rotate(45deg); }
-</style>
+  .contato-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 80px;
+    align-items: flex-start;
+  }
+  .tag-contato {
+    display: inline-block;
+    background-color: var(--cor-fundo-secundario);
+    color: var(--cor-destaque);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .titulo-principal {
+    font-size: 3.5rem;
+    margin: 0 0 24px 0;
+  }
+  .descricao {
+    color: var(--cor-texto-secundario);
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+  .contato-manual {
+    margin-top: 40px;
+    border-top: 1px solid #374151;
+    padding-top: 24px;
+  }
+  .contato-manual p {
+    margin: 0 0 8px 0;
+    color: var(--cor-texto-secundario);
+  }
+  .contato-manual a {
+    color: var(--cor-texto-principal);
+    font-weight: 500;
+    font-size: 1.1rem;
+    text-decoration: none;
+  }
+  .form-col {
+    background-color: var(--cor-fundo-secundario);
+    padding: 40px;
+    border-radius: 12px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .form-group {
+    margin-bottom: 24px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--cor-fundo);
+    border: 1px solid #374151;
+    border-radius: 8px;
+    padding: 14px;
+    color: var(--cor-texto-principal);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 3px rgba(0, 200, 255, 0.2);
+  }
+  .botao-enviar {
+    width: 100%;
+    background-color: var(--cor-destaque);
+    color: var(--cor-fundo);
+    border: none;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+  }
+  .botao-enviar:hover {
+    opacity: 0.9;
+  }
+  .hidden {
+    display: none;
+  }
+  
+  /* Estilos dos Checkboxes */
+  .checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--cor-fundo);
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+    -webkit-user-select: none; /* Evita seleção de texto no clique */
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .checkbox-group label:hover {
+    background-color: #2a303c;
+  }
+  .checkbox-group input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .custom-checkbox {
+    height: 20px;
+    width: 20px;
+    background-color: var(--cor-fundo);
+    border: 2px solid #374151;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .checkbox-group label:hover .custom-checkbox {
+    border-color: var(--cor-destaque);
+  }
+  .checkbox-group input[type="checkbox"]:checked ~ .custom-checkbox {
+    background-color: var(--cor-destaque);
+    border-color: var(--cor-destaque);
+  }
+  .custom-checkbox::after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .checkbox-group input[type="checkbox"]:checked ~ .custom-checkbox::after {
+    display: block;
+  }
+  .custom-checkbox::after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--cor-fundo);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const servicoDeInteresse = params.get('servico'); // O nome do parâmetro que usamos no link do serviço
 
-    if (servicoDeInteresse) {
-      const checkbox = document.querySelector<HTMLInputElement>(`.checkbox-group input[value="${servicoDeInteresse}"]`);
-      if (checkbox) {
-        checkbox.checked = true;
-      }
+  /* --- REGRAS DE RESPONSIVIDADE ADICIONADAS AQUI --- */
+  @media (max-width: 900px) {
+    .contato-grid {
+      /* Transforma o grid de 2 colunas em 1 coluna */
+      grid-template-columns: 1fr;
+      gap: 60px; /* Aumenta o espaço vertical entre os blocos */
     }
-  });
-</script>
+
+    .info-col {
+      text-align: center; /* Centraliza o texto da coluna de informações */
+    }
+
+    .contato-manual {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 600px) {
+    /* Em telas ainda menores, empilha os campos de nome/email e os checkboxes */
+    .form-row,
+    .checkbox-group {
+      grid-template-columns: 1fr;
+    }
+
+    .titulo-principal {
+      font-size: 2.8rem; /* Reduz um pouco o título principal */
+    }
+
+    .form-col {
+      padding: 24px; /* Reduz o padding interno do formulário */
+    }
+  }
+</style>
