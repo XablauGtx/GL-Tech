@@ -1,0 +1,8 @@
+# Arquivo: netlify.toml
+
+# Esta regra diz à Netlify para usar o seu arquivo 404.html
+# para qualquer URL que não for encontrada.
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
