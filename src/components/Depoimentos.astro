@@ -19,25 +19,28 @@ const depoimentos = [
 ---
 
 <section class="depoimentos-section">
-  <div class="section-header">
-    <h2 class="titulo-secao">O que nossos clientes dizem</h2>
-    <p class="subtitulo-secao">A confiança que construímos é o nosso maior ativo.</p>
-  </div>
-  <div class="depoimentos-grid">
-    {depoimentos.map(depoimento => (
-      <figure class="depoimento-card">
-        <blockquote>{depoimento.texto}</blockquote>
-        <figcaption>
-          <img src={depoimento.imagem} alt={`Foto de ${depoimento.nome}`} />
-          <div class="autor-info">
-            <cite class="nome-autor">{depoimento.nome}</cite>
-            <span class="cargo-autor">{depoimento.cargo}</span>
-          </div>
-        </figcaption>
-      </figure>
-    ))}
+  <div class="container">
+    <div class="section-header">
+      <h2 class="titulo-secao">O que nossos clientes dizem</h2>
+      <p class="subtitulo-secao">A confiança que construímos é o nosso maior ativo.</p>
+    </div>
+    <div class="depoimentos-grid">
+      {depoimentos.map(depoimento => (
+        <figure class="depoimento-card">
+          <blockquote>{depoimento.texto}</blockquote>
+          <figcaption>
+            <img src={depoimento.imagem} alt={`Foto de ${depoimento.nome}`} />
+            <div class="autor-info">
+              <cite class="nome-autor">{depoimento.nome}</cite>
+              <span class="cargo-autor">{depoimento.cargo}</span>
+            </div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
   </div>
 </section>
+
 
 <style>
   .depoimentos-section { padding: 80px 0; }

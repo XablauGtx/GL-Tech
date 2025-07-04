@@ -71,4 +71,11 @@ import { ViewTransitions } from 'astro:transitions';
     position: sticky;
     top: 20px;
   }
+
+  @media (max-width: 768px) {
+    .site-container {
+      /* Reduz o padding lateral para telas menores */
+      padding: 0 20px;
+    }
+  }
 </style>

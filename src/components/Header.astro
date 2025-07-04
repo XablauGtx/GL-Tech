@@ -64,9 +64,10 @@ const { pathname } = Astro.url;
     justify-content: space-between;
     align-items: center;
     padding: 16px 32px;
+    position: relative; /* Adicionado para garantir o contexto de z-index */
+    z-index: 1001; /* Garante que o header fique sobre o conteúdo da página */
   }
   .header-logo {
-    /* No desktop, o logo fica à esquerda */
     flex: 1;
     justify-content: flex-start;
   }
@@ -81,7 +82,7 @@ const { pathname } = Astro.url;
     justify-content: flex-end;
   }
   .menu-toggle-button {
-    display: none; /* Escondido no desktop */
+    display: none;
   }
 
   /* Outros estilos de desktop... */
@@ -93,55 +94,78 @@ const { pathname } = Astro.url;
   .cta-button { background-color: var(--cor-destaque, #3b82f6); color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background-color 0.3s; }
   .cta-button:hover { background-color: #2563eb; }
   
-  /* Estilos do Menu Mobile Overlay */
+  /* --- ESTILOS DO MENU MOBILE OVERLAY (CORRIGIDOS) --- */
   .icon-close { display: none; }
   .mobile-menu {
     position: fixed;
-    top: 73px; /* Começa abaixo do header */
-    left: 0; right: 0; bottom: 0;
+    top: 0; /* Ocupa a tela inteira */
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(25, 28, 35, 0.98);
     backdrop-filter: blur(8px);
-    z-index: 999;
+    z-index: 1000; /* Fica abaixo do header, mas acima de todo o resto */
+    
+    /* Lógica para esconder e mostrar */
     opacity: 0;
-    transform: translateY(-10px);
     pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    padding: 24px;
+    transition: opacity 0.3s ease;
+    
+    /* CORREÇÃO DE ALINHAMENTO AQUI 👇 */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
   }
+
   .mobile-menu[data-visible="true"] {
     opacity: 1;
-    transform: translateY(0);
     pointer-events: auto;
   }
-  .mobile-menu nav { display: flex; flex-direction: column; gap: 20px; text-align: center; }
-  .mobile-menu nav a { color: var(--cor-texto-principal, #fff); text-decoration: none; font-size: 1.8rem; padding: 12px; font-weight: 500; }
-  .cta-button-mobile { background: var(--cor-destaque, #3b82f6); color: var(--cor-fundo); border-radius: 8px; margin-top: 20px; }
+  
+  .mobile-menu nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Garante que o botão também fique centralizado */
+    gap: 20px;
+    text-align: center;
+  }
+  .mobile-menu nav a {
+    color: var(--cor-texto-principal, #fff);
+    text-decoration: none;
+    font-size: 1.8rem;
+    padding: 12px;
+    font-weight: 500;
+  }
+  .cta-button-mobile {
+    background: var(--cor-destaque, #3b82f6);
+    color: var(--cor-fundo);
+    border-radius: 8px;
+    margin-top: 20px;
+    padding: 12px 24px; /* Adicionado padding para consistência */
+  }
 
 
   /* --- LAYOUT MOBILE (display: grid) --- */
   @media (max-width: 900px) {
-    /* Esconde os elementos de desktop */
     .nav-pill, .header-actions {
       display: none;
     }
 
-    /* Transforma o header em um grid de 3 colunas */
     .site-header {
       display: grid;
-      grid-template-columns: 50px 1fr 50px; /* Esquerda | Centro (flexível) | Direita */
-      padding: 16px; /* Padding ajustado para mobile */
+      grid-template-columns: 50px 1fr 50px;
+      padding: 16px;
+      /* Garante que o fundo do header não seja transparente no modo mobile */
+      background-color: var(--cor-fundo); 
+      border-radius: 10px;
     }
 
-    /* Posiciona os elementos no grid */
     .menu-toggle-button {
       display: flex;
       justify-content: center;
       align-items: center;
-      grid-column: 1 / 2; /* Coloca na primeira coluna */
+      grid-column: 1 / 2;
       background: none;
       border: none;
       color: var(--cor-texto-principal, #fff);
@@ -149,17 +173,15 @@ const { pathname } = Astro.url;
       z-index: 1001;
     }
     .header-logo {
-      grid-column: 2 / 3; /* Coloca na coluna central */
-      justify-self: center; /* Centraliza horizontalmente */
+      grid-column: 2 / 3;
+      justify-self: center;
     }
 
-    /* Lógica para mostrar o "X" quando o menu está aberto */
     .menu-toggle-button[aria-expanded="true"] .icon-menu { display: none; }
     .menu-toggle-button[aria-expanded="true"] .icon-close { display: block; }
     
-    /* Move o botão para a direita quando o menu está aberto */
     .menu-toggle-button[aria-expanded="true"] {
-      grid-column: 3 / 4; /* Move para a terceira coluna */
+      grid-column: 3 / 4;
     }
     
     body.no-scroll { overflow: hidden; }

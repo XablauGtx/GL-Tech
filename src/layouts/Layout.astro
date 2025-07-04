@@ -63,6 +63,12 @@ const {
 </html>
 
 <style is:global>
+  html {
+    box-sizing: border-box;
+  }
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
   :root {
     --cor-fundo: #191c23;
     --cor-fundo-secundario: #1e222a;
@@ -97,4 +103,12 @@ const {
     flex-grow: 1;
     padding-bottom: 40px;
   }
+
+  @media (max-width: 768px) {
+  .site-container {
+    /* Ajusta o padding lateral para um bom espaçamento em telas menores */
+    padding: 0 24px;
+  }
+}
+  
 </style>
