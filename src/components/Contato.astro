@@ -1,254 +1,291 @@
 ---
-// Arquivo: src/components/Contato.astro - VERSÃO FINAL COM MELHORIAS
+// Arquivo: src/components/Contato.astro - VERSÃO FINAL COM BOTÃO WHATSAPP
 
 import { LISTA_DE_SERVICOS } from '../data/servicos';
+import { Icon } from 'astro-icon/components'; // 1. Importar o componente Icon
 ---
 <section class="contato-section">
-  <div class="contato-grid">
-    <div class="info-col">
-      <span class="tag-contato">Entre em Contato</span>
-      <h1 class="titulo-principal">Vamos construir algo incrível.</h1>
-      <p class="descricao">
-        Tem uma ideia, um projeto ou apenas uma dúvida? Adoraríamos ouvir sobre isso. Preencha o formulário ou nos envie um e-mail. Estamos prontos para transformar seu desafio em uma solução digital.
-      </p>
-      <div class="contato-manual">
-        <p>Ou nos contate diretamente por e-mail:</p>
-        <a href="mailto:contato@gltechnology.com.br">contato@gltechnology.com.br</a>
-      </div>
+ <div class="contato-grid">
+  <div class="info-col">
+   <span class="tag-contato">Entre em Contato</span>
+   <h1 class="titulo-principal">Vamos construir algo incrível.</h1>
+   <p class="descricao">
+    Tem uma ideia, um projeto ou apenas uma dúvida? Adoraríamos ouvir sobre isso. Preencha o formulário ou nos envie um e-mail. Estamos prontos para transformar seu desafio em uma solução digital.
+   </p>
+   <div class="contato-manual">
+    <p>Ou nos contate diretamente:</p>
+    
+    {/* 2. Container para alinhar E-mail e WhatsApp */}
+    <div class="contato-direto-links">
+     <a href="mailto:contato@gltechnology.com.br" class="link-direto email">
+      <Icon name="mdi:email-outline" class="contato-icone"/>
+      contato@gltechnology.com.br
+     </a>
+    
+     {/* 3. ADICIONADO: Link/Botão do WhatsApp */}
+     <a 
+      href="https://wa.me/5541995097919" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="link-direto whatsapp"
+     >
+      <Icon name="simple-icons:whatsapp" class="contato-icone"/>
+      Falar pelo WhatsApp
+     </a>
     </div>
 
-    <div class="form-col">
-      <form name="contato-detalhado" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contato/sucesso">
-        <input type="hidden" name="form-name" value="contato-detalhado" />
-        <p class="hidden"><label>Não preencha: <input name="bot-field" /></label></p>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="nome">Nome Completo</label>
-            <input type="text" name="nome" id="nome" placeholder="Digite seu nome completo" required />
-          </div>
-          <div class="form-group">
-            <label for="email">Endereço de E-mail</label>
-            <input type="email" name="email" id="email" placeholder="seu.email@exemplo.com" required />
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label>Quais serviços te interessam?</label>
-          <div class="checkbox-group">
-            {LISTA_DE_SERVICOS.map(servico => (
-              <label>
-                <input type="checkbox" name="servicos[]" value={servico.id} />
-                <span class="custom-checkbox"></span> 
-                {servico.nome}
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="mensagem">Mensagem</label>
-          <textarea name="mensagem" id="mensagem" rows="6" placeholder="Descreva seu projeto ou sua dúvida aqui..." required></textarea>
-        </div>
-
-        <button type="submit" class="botao-enviar">Enviar Formulário &rarr;</button>
-      </form>
-    </div>
+   </div>
   </div>
+
+  <div class="form-col">
+   <form name="contato-detalhado" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contato/sucesso">
+    <input type="hidden" name="form-name" value="contato-detalhado" />
+    <p class="hidden"><label>Não preencha: <input name="bot-field" /></label></p>
+
+    <div class="form-row">
+     <div class="form-group">
+      <label for="nome">Nome Completo</label>
+      <input type="text" name="nome" id="nome" placeholder="Digite seu nome completo" required />
+     </div>
+     <div class="form-group">
+      <label for="email">Endereço de E-mail</label>
+      <input type="email" name="email" id="email" placeholder="seu.email@exemplo.com" required />
+     </div>
+    </div>
+    
+    <div class="form-group">
+     <label>Quais serviços te interessam?</label>
+     <div class="checkbox-group">
+      {LISTA_DE_SERVICOS.map(servico => (
+       <label>
+        <input type="checkbox" name="servicos[]" value={servico.id} />
+        <span class="custom-checkbox"></span> 
+        {servico.nome}
+       </label>
+      ))}
+     </div>
+    </div>
+
+    <div class="form-group">
+     <label for="mensagem">Mensagem</label>
+     <textarea name="mensagem" id="mensagem" rows="6" placeholder="Descreva seu projeto ou sua dúvida aqui..." required></textarea>
+    </div>
+
+    <button type="submit" class="botao-enviar">Enviar Formulário &rarr;</button>
+   </form>
+  </div>
+ </div>
 </section>
 
 <style>
+ .contato-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 80px;
+  align-items: flex-start;
+ }
+ .tag-contato {
+  display: inline-block;
+  background-color: var(--cor-fundo-secundario);
+  color: var(--cor-destaque);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  margin-bottom: 24px;
+ }
+ .titulo-principal {
+  font-size: 3.5rem;
+  margin: 0 0 24px 0;
+ }
+ .descricao {
+  color: var(--cor-texto-secundario);
+  line-height: 1.8;
+  font-size: 1.1rem;
+ }
+ .contato-manual {
+  margin-top: 40px;
+  border-top: 1px solid #374151;
+  padding-top: 24px;
+ }
+ .contato-manual p {
+  margin: 0 0 16px 0; /* Aumentei a margem inferior */
+  color: var(--cor-texto-secundario);
+ }
+
+ /* 4. NOVO: Estilos para alinhar os links */
+ .contato-direto-links {
+  display: flex;
+  flex-direction: column; /* Um link abaixo do outro */
+  gap: 16px; /* Espaço entre os links */
+ }
+ .link-direto {
+  color: var(--cor-texto-principal);
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-decoration: none;
+  display: inline-flex; /* Para alinhar o ícone com o texto */
+  align-items: center;
+  gap: 10px; /* Espaço entre ícone e texto */
+  transition: color 0.3s;
+ }
+ .link-direto:hover {
+  color: var(--cor-destaque);
+ }
+ .contato-icone {
+  font-size: 1.5rem; /* Tamanho do ícone */
+ }
+ .link-direto.whatsapp {
+ }
+
+ .form-col {
+  background-color: var(--cor-fundo-secundario);
+  padding: 40px;
+  border-radius: 12px;
+ }
+ .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+ }
+ .form-group {
+  margin-bottom: 24px;
+ }
+ .form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+ }
+ .form-group input[type="text"],
+ .form-group input[type="email"],
+ .form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--cor-fundo);
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--cor-texto-principal);
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+ }
+ .form-group input:focus,
+ .form-group textarea:focus {
+  outline: none;
+  border-color: var(--cor-destaque);
+  box-shadow: 0 0 0 3px rgba(0, 200, 255, 0.2);
+ }
+ .botao-enviar {
+  width: 100%;
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+  border: none;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+ }
+ .botao-enviar:hover {
+  opacity: 0.9;
+ }
+ .hidden {
+  display: none;
+ }
+ 
+ /* Estilos dos Checkboxes */
+ .checkbox-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+ }
+ .checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--cor-fundo);
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: relative;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+ }
+ .checkbox-group label:hover {
+  background-color: #2a303c;
+ }
+ .checkbox-group input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+ }
+ .custom-checkbox {
+  height: 20px;
+  width: 20px;
+  background-color: var(--cor-fundo);
+  border: 2px solid #374151;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+  flex-shrink: 0;
+  position: relative;
+ }
+ .checkbox-group label:hover .custom-checkbox {
+  border-color: var(--cor-destaque);
+ }
+ .checkbox-group input[type="checkbox"]:checked ~ .custom-checkbox {
+  background-color: var(--cor-destaque);
+  border-color: var(--cor-destaque);
+ }
+ .custom-checkbox::after {
+  content: "";
+  position: absolute;
+  display: none;
+ }
+ .checkbox-group input[type="checkbox"]:checked ~ .custom-checkbox::after {
+  display: block;
+ }
+ .custom-checkbox::after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--cor-fundo);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+ }
+
+ /* --- REGRAS DE RESPONSIVIDADE ADICIONADAS AQUI --- */
+ @media (max-width: 900px) {
   .contato-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 80px;
-    align-items: flex-start;
+   grid-template-columns: 1fr;
+   gap: 60px;
   }
-  .tag-contato {
-    display: inline-block;
-    background-color: var(--cor-fundo-secundario);
-    color: var(--cor-destaque);
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-weight: 500;
-    margin-bottom: 24px;
-  }
-  .titulo-principal {
-    font-size: 3.5rem;
-    margin: 0 0 24px 0;
-  }
-  .descricao {
-    color: var(--cor-texto-secundario);
-    line-height: 1.8;
-    font-size: 1.1rem;
+  .info-col {
+   text-align: center;
   }
   .contato-manual {
-    margin-top: 40px;
-    border-top: 1px solid #374151;
-    padding-top: 24px;
+   text-align: center;
   }
-  .contato-manual p {
-    margin: 0 0 8px 0;
-    color: var(--cor-texto-secundario);
+  /* 5. NOVO: Centraliza os links no mobile */
+  .contato-direto-links {
+   align-items: center; /* Alinha os itens no centro */
   }
-  .contato-manual a {
-    color: var(--cor-texto-principal);
-    font-weight: 500;
-    font-size: 1.1rem;
-    text-decoration: none;
+ }
+
+ @media (max-width: 600px) {
+  .form-row,
+  .checkbox-group {
+   grid-template-columns: 1fr;
+  }
+  .titulo-principal {
+   font-size: 2.8rem;
   }
   .form-col {
-    background-color: var(--cor-fundo-secundario);
-    padding: 40px;
-    border-radius: 12px;
+   padding: 24px;
   }
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  .form-group {
-    margin-bottom: 24px;
-  }
-  .form-group label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 500;
-  }
-  .form-group input[type="text"],
-  .form-group input[type="email"],
-  .form-group textarea {
-    width: 100%;
-    box-sizing: border-box;
-    background-color: var(--cor-fundo);
-    border: 1px solid #374151;
-    border-radius: 8px;
-    padding: 14px;
-    color: var(--cor-texto-principal);
-    font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .form-group input:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: var(--cor-destaque);
-    box-shadow: 0 0 0 3px rgba(0, 200, 255, 0.2);
-  }
-  .botao-enviar {
-    width: 100%;
-    background-color: var(--cor-destaque);
-    color: var(--cor-fundo);
-    border: none;
-    padding: 16px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: opacity 0.3s;
-  }
-  .botao-enviar:hover {
-    opacity: 0.9;
-  }
-  .hidden {
-    display: none;
-  }
-  
-  /* Estilos dos Checkboxes */
-  .checkbox-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .checkbox-group label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background-color: var(--cor-fundo);
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    position: relative;
-    -webkit-user-select: none; /* Evita seleção de texto no clique */
-    -ms-user-select: none;
-    user-select: none;
-  }
-  .checkbox-group label:hover {
-    background-color: #2a303c;
-  }
-  .checkbox-group input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  .custom-checkbox {
-    height: 20px;
-    width: 20px;
-    background-color: var(--cor-fundo);
-    border: 2px solid #374151;
-    border-radius: 4px;
-    transition: all 0.2s ease-in-out;
-    flex-shrink: 0;
-    position: relative;
-  }
-  .checkbox-group label:hover .custom-checkbox {
-    border-color: var(--cor-destaque);
-  }
-  .checkbox-group input[type="checkbox"]:checked ~ .custom-checkbox {
-    background-color: var(--cor-destaque);
-    border-color: var(--cor-destaque);
-  }
-  .custom-checkbox::after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  .checkbox-group input[type="checkbox"]:checked ~ .custom-checkbox::after {
-    display: block;
-  }
-  .custom-checkbox::after {
-    left: 6px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
-    border: solid var(--cor-fundo);
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-  }
-
-
-  /* --- REGRAS DE RESPONSIVIDADE ADICIONADAS AQUI --- */
-  @media (max-width: 900px) {
-    .contato-grid {
-      /* Transforma o grid de 2 colunas em 1 coluna */
-      grid-template-columns: 1fr;
-      gap: 60px; /* Aumenta o espaço vertical entre os blocos */
-    }
-
-    .info-col {
-      text-align: center; /* Centraliza o texto da coluna de informações */
-    }
-
-    .contato-manual {
-      text-align: center;
-    }
-  }
-
-  @media (max-width: 600px) {
-    /* Em telas ainda menores, empilha os campos de nome/email e os checkboxes */
-    .form-row,
-    .checkbox-group {
-      grid-template-columns: 1fr;
-    }
-
-    .titulo-principal {
-      font-size: 2.8rem; /* Reduz um pouco o título principal */
-    }
-
-    .form-col {
-      padding: 24px; /* Reduz o padding interno do formulário */
-    }
-  }
+ }
 </style>
