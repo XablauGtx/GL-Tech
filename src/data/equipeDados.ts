@@ -2,7 +2,7 @@
 
 // 1. Definindo uma Interface para garantir a estrutura (Boa prática)
 export interface RedeSocial {
-   plataforma: 'linkedin' | 'github' | 'website' | 'outro'; // Adicione mais se precisar
+   plataforma: 'linkedin' | 'github' | 'website' | 'twitter' | 'outro'; // Adicione mais se precisar
    url: string; // URL COMPLETA
   }
   
