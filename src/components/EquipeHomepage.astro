@@ -1,93 +1,127 @@
 ---
-// src/components/EquipeHomepage.astro - VERSÃO FINAL E CORRETA
+// src/components/EquipeHomepage.astro - VERSÃO REALMENTE CORRIGIDA
 
 import { Icon } from 'astro-icon/components';
-// 1. REMOVEMOS a lista daqui e...
-// 2. ...IMPORTAMOS ela do nosso novo arquivo central!
-import { membros } from '../data/equipeDados'; // <--- A SOLUÇÃO
+import { membros } from '../data/equipeDados';
 ---
 <section class="equipe-section">
-  <h2 class="titulo-secao"># Conheça o Time</h2>
-  <div class="equipe-grid">
-    {/* O resto do código continua exatamente igual, pois agora ele lê os dados importados */}
-    {membros.map(membro => (
-      <a href={`/equipe/${membro.slug}`} class="membro-card">
-        <div class="membro-info-principal">
-          <img src={membro.foto} alt={`Foto de ${membro.nome}`} class="membro-foto" />
-          <h3 class="membro-nome">{membro.nome}</h3>
-          <p class="membro-cargo">{membro.cargo}</p>
-          <div class="membro-linkedin">
-            <Icon name="mdi:linkedin" />
-          </div>
-        </div>
-        <div class="membro-preview">
-          <h4>Principais Skills:</h4>
-          <ul>
-            {membro.skills.slice(0, 3).map(skill => (
-              <li>{skill}</li>
-            ))}
-          </ul>
-        </div>
-      </a>
-    ))}
-  </div>
+ <h2 class="titulo-secao"># Conheça o Time</h2>
+ <div class="equipe-grid">
+  {membros.map(membro => {
+   const linkedIn = membro.redesSociais.find(rede => rede.plataforma === 'linkedin');
+
+   return (
+    <div class="membro-card"> 
+     <div class="membro-info-principal">
+      <img src={membro.foto} alt={`Foto de ${membro.nome}`} class="membro-foto" />
+      <h3 class="membro-nome">{membro.nome}</h3>
+      <p class="membro-cargo">{membro.cargo}</p>
+      
+      {linkedIn && (
+       <a 
+        href={linkedIn.url} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="membro-linkedin-link" 
+        aria-label={`Perfil de ${membro.nome} no LinkedIn`}
+       >
+        <Icon name="mdi:linkedin" />
+       </a>
+      )}
+     </div>
+
+     <div class="membro-preview">
+      <h4>Principais Skills:</h4>
+      <ul>
+       {/* --- A CORREÇÃO ESTÁ AQUI --- */}
+       {membro.skills.slice(0, 3).map(skill => (
+        <li>{skill.nome}</li> 
+       ))}
+      </ul>
+      <a href={`/equipe/${membro.slug}`} class="ver-mais-link">Ver Mais</a>
+     </div>
+    </div>
+   )
+  })}
+ </div>
 </section>
 
 <style>
-  .equipe-section { margin-top: 60px; }
-  .titulo-secao { color: var(--cor-destaque); font-weight: 500; margin-bottom: 40px; text-align: center; }
-  
-  /* REGRA CORRIGIDA AQUI */
-  .equipe-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-  }
-  
-  .membro-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    background-color: var(--cor-fundo-secundario);
-    border-radius: 8px;
-    padding: 24px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    min-height: 280px;
-    /* Adicionamos display: flex para centralizar o conteúdo interno */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+ .equipe-section { margin-top: 60px; margin-bottom: 80px; }
+ .titulo-secao { color: var(--cor-destaque); font-weight: 500; margin-bottom: 40px; text-align: center; }
+ 
+ .equipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+  gap: 30px;
+ }
+ 
+ .membro-card {
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+  text-decoration: none;
+  color: inherit;
+  background-color: var(--cor-fundo-secundario);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-height: 280px; 
+ }
 
-  .membro-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+ .membro-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
-  .membro-info-principal, .membro-preview { transition: opacity 0.4s ease, transform 0.4s ease; }
-  
-  .membro-preview {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    opacity: 0;
-    transform: translateY(10px);
-    background-color: rgba(30, 34, 42, 0.9);
-  }
+ .membro-info-principal, .membro-preview { transition: opacity 0.4s ease, transform 0.4s ease; width: 100%; }
+ 
+ .membro-preview {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  opacity: 0;
+  transform: translateY(10px);
+  background-color: rgba(30, 34, 42, 0.95); 
+  pointer-events: none; 
+ }
 
-  .membro-card:hover .membro-info-principal { opacity: 0; transform: translateY(-10px); }
-  .membro-card:hover .membro-preview { opacity: 1; transform: translateY(0); }
+ .membro-card:hover .membro-info-principal { opacity: 0; transform: translateY(-10px); pointer-events: none; }
+ .membro-card:hover .membro-preview { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-  .membro-foto { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--cor-destaque); margin-bottom: 12px; flex-shrink: 0; /* Impede que a foto encolha */ }
-  .membro-nome { margin: 0; font-size: 1.1rem; color: var(--cor-texto-principal); }
-  .membro-cargo { font-size: 0.85rem; color: var(--cor-texto-secundario); margin: 4px 0 12px 0; }
-  .membro-linkedin { color: var(--cor-texto-secundario); font-size: 1.5rem; margin-top: auto; /* Empurra o ícone para baixo se houver espaço extra */ }
-  .membro-preview h4 { margin: 0 0 12px 0; color: var(--cor-destaque); font-size: 1rem; }
-  .membro-preview ul { list-style: none; padding: 0; margin: 0; }
-  .membro-preview li { background-color: var(--cor-fundo); padding: 4px 10px; border-radius: 4px; margin-bottom: 8px; font-size: 0.8rem; }
+ .membro-foto { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--cor-destaque); margin-bottom: 12px; flex-shrink: 0; }
+ .membro-nome { margin: 0; font-size: 1.1rem; color: var(--cor-texto-principal); }
+ .membro-cargo { font-size: 0.85rem; color: var(--cor-texto-secundario); margin: 4px 0 12px 0; }
+ 
+ .membro-linkedin-link { 
+  color: var(--cor-texto-secundario); 
+  font-size: 1.5rem; 
+  margin-top: auto; 
+  display: inline-block; 
+  transition: color 0.3s;
+ }
+ .membro-linkedin-link:hover {
+  color: #0A66C2; 
+ }
+
+ .membro-preview h4 { margin: 0 0 12px 0; color: var(--cor-destaque); font-size: 1rem; }
+ .membro-preview ul { list-style: none; padding: 0; margin: 0; }
+ .membro-preview li { background-color: var(--cor-fundo); padding: 4px 10px; border-radius: 4px; margin-bottom: 8px; font-size: 0.8rem; display: inline-block; margin-right: 4px; }
+
+ .ver-mais-link {
+  color: var(--cor-destaque);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-top: 16px; 
+  transition: opacity 0.3s;
+ }
+ .ver-mais-link:hover {
+  opacity: 0.8;
+ }
 </style>
