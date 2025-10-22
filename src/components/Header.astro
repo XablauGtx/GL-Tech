@@ -1,188 +1,220 @@
 ---
-// src/components/Header.astro - NOVO LAYOUT MOBILE
+// src/components/Header.astro - CÓDIGO COMPLETO E ATUALIZADO
 
 const { pathname } = Astro.url;
 ---
 
 <header class="site-header">
-  <button id="menu-toggle" class="menu-toggle-button" aria-label="Abrir menu" aria-expanded="false">
-    <svg class="icon-menu" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-  </button>
+ <button id="menu-toggle" class="menu-toggle-button" aria-label="Abrir menu" aria-expanded="false">
+  <svg class="icon-menu" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+ </button>
 
-  <div class="header-logo">
-    <a href="/">
-      <img src="/img/logo/logo.png" alt="GL Technology Logo" />
-    </a>
-  </div>
+ <div class="header-logo">
+  <a href="/">
+   <img src="/img/logo/logo.png" alt="GL Technology Logo" />
+  </a>
+ </div>
 
-  <nav class="nav-pill">
-    <a href="/servicos" class:list={{ ativo: pathname.startsWith('/servicos') }}>Serviços</a>
-    <a href="/projetos" class:list={{ ativo: pathname.startsWith('/projetos') }}>Projetos</a>
-    <a href="/sobre" class:list={{ ativo: pathname.startsWith('/sobre') }}>Sobre</a>
-    <a href="/processo" class:list={{ ativo: pathname.startsWith('/processo') }}>Processo</a>
-  </nav>
+ <nav class="nav-pill">
+  <a href="/servicos" class:list={{ ativo: pathname.startsWith('/servicos') }}>Serviços</a>
+  <a href="/projetos" class:list={{ ativo: pathname.startsWith('/projetos') }}>Projetos</a>
+  <a href="/sobre" class:list={{ ativo: pathname.startsWith('/sobre') }}>Sobre</a>
+  <a href="/processo" class:list={{ ativo: pathname.startsWith('/processo') }}>Processo</a>
+ </nav>
 
-  <div class="header-actions">
-    <a href="/contato" class="cta-button">Entre em Contato</a>
-  </div>
+ <div class="header-actions">
+  <a href="/contato" class="cta-button">Entre em Contato</a>
+ </div>
 </header>
 
 <div id="mobile-menu" class="mobile-menu" data-visible="false">
-  <nav>
-    <a href="/servicos">Serviços</a>
-    <a href="/projetos">Projetos</a>
-    <a href="/sobre">Sobre</a>
-    <a href="/processo">Processo</a>
-    <a href="/contato" class="cta-button-mobile">Entre em Contato</a>
-  </nav>
+ <nav>
+  <a href="/servicos">Serviços</a>
+  <a href="/projetos">Projetos</a>
+  <a href="/sobre">Sobre</a>
+  <a href="/processo">Processo</a>
+  <a href="/contato" class="cta-button-mobile">Entre em Contato</a>
+ </nav>
 </div>
 
 
 <script>
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
+  function setupMobileMenu() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
+    if (!menuToggle || !mobileMenu) {
+      // Se os elementos não existirem, não faz nada
+      return;
+    }
+
+    // Função para abrir/fechar o menu
+    const toggleMenu = () => {
       const isVisible = mobileMenu.getAttribute('data-visible') === 'true';
       
       menuToggle.setAttribute('aria-expanded', String(!isVisible));
       mobileMenu.setAttribute('data-visible', String(!isVisible));
       
       document.body.classList.toggle('no-scroll', !isVisible);
+    };
+
+    // Função para fechar o menu (usada nos links)
+    const closeMenu = () => {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('data-visible', 'false');
+      document.body.classList.remove('no-scroll');
+    };
+
+    // 1. Adiciona o listener ao botão principal
+    // Removemos qualquer listener antigo para evitar duplicação,
+    // embora com a substituição do DOM do Astro, isso seja mais uma garantia.
+    menuToggle.removeEventListener('click', toggleMenu); // Garante que não haja duplicatas
+    menuToggle.addEventListener('click', toggleMenu);
+
+    // 2. [MELHORIA] Fecha o menu quando um link é clicado
+    const menuLinks = mobileMenu.querySelectorAll('nav a');
+    menuLinks.forEach(link => {
+      link.removeEventListener('click', closeMenu); // Garante que não haja duplicatas
+      link.addEventListener('click', closeMenu);
     });
   }
+
+  // Roda a função no carregamento inicial da página
+  setupMobileMenu();
+
+  // Roda a função NOVAMENTE toda vez que o Astro navegar para uma nova página
+  document.addEventListener('astro:page-load', setupMobileMenu);
 </script>
 
 
 <style>
-  /* --- LAYOUT DESKTOP (display: flex) --- */
+ /* --- LAYOUT DESKTOP (display: flex) --- */
+ .site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  position: relative; /* Adicionado para garantir o contexto de z-index */
+  z-index: 1001; /* Garante que o header fique sobre o conteúdo da página */
+ }
+ .header-logo {
+  flex: 1;
+  justify-content: flex-start;
+ }
+ .nav-pill {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+ }
+ .header-actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+ }
+ .menu-toggle-button {
+  display: none;
+ }
+
+ /* Outros estilos de desktop... */
+ .header-logo img { height: 40px; width: auto; }
+ .nav-pill { background-color: #111113; padding: 8px 16px; border-radius: 9999px; border: 1px solid #2d2d30; gap: 8px; }
+ .nav-pill a { color: var(--cor-texto-secundario, #a0a0a0); text-decoration: none; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease; font-size: 0.9rem; font-weight: 500; }
+ .nav-pill a:hover { color: var(--cor-texto-principal, #ffffff); background-color: #27272a; }
+ .nav-pill a.ativo { color: var(--cor-texto-principal, #ffffff); background-color: var(--cor-destaque, #3b82f6); }
+ .cta-button { background-color: var(--cor-destaque, #3b82f6); color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background-color 0.3s; }
+ .cta-button:hover { background-color: #2563eb; }
+ 
+ /* --- ESTILOS DO MENU MOBILE OVERLAY (CORRIGIDOS) --- */
+ .icon-close { display: none; }
+ .mobile-menu {
+  position: fixed;
+  top: 0; /* Ocupa a tela inteira */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(25, 28, 35, 0.98);
+  backdrop-filter: blur(8px);
+  z-index: 1000; /* Fica abaixo do header, mas acima de todo o resto */
+  
+  /* Lógica para esconder e mostrar */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  
+  /* CORREÇÃO DE ALINHAMENTO AQUI 👇 */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza horizontalmente */
+  justify-content: center; /* Centraliza verticalmente */
+ }
+
+ .mobile-menu[data-visible="true"] {
+  opacity: 1;
+  pointer-events: auto;
+ }
+ 
+ .mobile-menu nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Garante que o botão também fique centralizado */
+  gap: 20px;
+  text-align: center;
+ }
+ .mobile-menu nav a {
+  color: var(--cor-texto-principal, #fff);
+  text-decoration: none;
+  font-size: 1.8rem;
+  padding: 12px;
+  font-weight: 500;
+ }
+ .cta-button-mobile {
+  background: var(--cor-destaque, #3b82f6);
+  color: var(--cor-fundo);
+  border-radius: 8px;
+  margin-top: 20px;
+  padding: 12px 24px; /* Adicionado padding para consistência */
+ }
+
+
+ /* --- LAYOUT MOBILE (display: grid) --- */
+ @media (max-width: 900px) {
+  .nav-pill, .header-actions {
+   display: none;
+  }
+
   .site-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 32px;
-    position: relative; /* Adicionado para garantir o contexto de z-index */
-    z-index: 1001; /* Garante que o header fique sobre o conteúdo da página */
+   display: grid;
+   grid-template-columns: 50px 1fr 50px;
+   padding: 16px;
+   /* Garante que o fundo do header não seja transparente no modo mobile */
+   background-color: var(--cor-fundo); 
+   border-radius: 10px;
+  }
+
+  .menu-toggle-button {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   grid-column: 1 / 2;
+   background: none;
+   border: none;
+   color: var(--cor-texto-principal, #fff);
+   cursor: pointer;
+   z-index: 1001;
   }
   .header-logo {
-    flex: 1;
-    justify-content: flex-start;
-  }
-  .nav-pill {
-    flex: 2;
-    display: flex;
-    justify-content: center;
-  }
-  .header-actions {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-  }
-  .menu-toggle-button {
-    display: none;
+   grid-column: 2 / 3;
+   justify-self: center;
   }
 
-  /* Outros estilos de desktop... */
-  .header-logo img { height: 40px; width: auto; }
-  .nav-pill { background-color: #111113; padding: 8px 16px; border-radius: 9999px; border: 1px solid #2d2d30; gap: 8px; }
-  .nav-pill a { color: var(--cor-texto-secundario, #a0a0a0); text-decoration: none; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease; font-size: 0.9rem; font-weight: 500; }
-  .nav-pill a:hover { color: var(--cor-texto-principal, #ffffff); background-color: #27272a; }
-  .nav-pill a.ativo { color: var(--cor-texto-principal, #ffffff); background-color: var(--cor-destaque, #3b82f6); }
-  .cta-button { background-color: var(--cor-destaque, #3b82f6); color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background-color 0.3s; }
-  .cta-button:hover { background-color: #2563eb; }
+  .menu-toggle-button[aria-expanded="true"] .icon-menu { display: none; }
+  .menu-toggle-button[aria-expanded="true"] .icon-close { display: block; }
   
-  /* --- ESTILOS DO MENU MOBILE OVERLAY (CORRIGIDOS) --- */
-  .icon-close { display: none; }
-  .mobile-menu {
-    position: fixed;
-    top: 0; /* Ocupa a tela inteira */
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(25, 28, 35, 0.98);
-    backdrop-filter: blur(8px);
-    z-index: 1000; /* Fica abaixo do header, mas acima de todo o resto */
-    
-    /* Lógica para esconder e mostrar */
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    
-    /* CORREÇÃO DE ALINHAMENTO AQUI 👇 */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centraliza horizontalmente */
-    justify-content: center; /* Centraliza verticalmente */
-  }
-
-  .mobile-menu[data-visible="true"] {
-    opacity: 1;
-    pointer-events: auto;
+  .menu-toggle-button[aria-expanded="true"] {
+   grid-column: 3 / 4;
   }
   
-  .mobile-menu nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Garante que o botão também fique centralizado */
-    gap: 20px;
-    text-align: center;
-  }
-  .mobile-menu nav a {
-    color: var(--cor-texto-principal, #fff);
-    text-decoration: none;
-    font-size: 1.8rem;
-    padding: 12px;
-    font-weight: 500;
-  }
-  .cta-button-mobile {
-    background: var(--cor-destaque, #3b82f6);
-    color: var(--cor-fundo);
-    border-radius: 8px;
-    margin-top: 20px;
-    padding: 12px 24px; /* Adicionado padding para consistência */
-  }
-
-
-  /* --- LAYOUT MOBILE (display: grid) --- */
-  @media (max-width: 900px) {
-    .nav-pill, .header-actions {
-      display: none;
-    }
-
-    .site-header {
-      display: grid;
-      grid-template-columns: 50px 1fr 50px;
-      padding: 16px;
-      /* Garante que o fundo do header não seja transparente no modo mobile */
-      background-color: var(--cor-fundo); 
-      border-radius: 10px;
-    }
-
-    .menu-toggle-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      grid-column: 1 / 2;
-      background: none;
-      border: none;
-      color: var(--cor-texto-principal, #fff);
-      cursor: pointer;
-      z-index: 1001;
-    }
-    .header-logo {
-      grid-column: 2 / 3;
-      justify-self: center;
-    }
-
-    .menu-toggle-button[aria-expanded="true"] .icon-menu { display: none; }
-    .menu-toggle-button[aria-expanded="true"] .icon-close { display: block; }
-    
-    .menu-toggle-button[aria-expanded="true"] {
-      grid-column: 3 / 4;
-    }
-    
-    body.no-scroll { overflow: hidden; }
-  }
+  body.no-scroll { overflow: hidden; }
+ }
 </style>
