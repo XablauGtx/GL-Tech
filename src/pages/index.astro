@@ -1,5 +1,4 @@
 ---
-// src/pages/index.astro - VERSÃO REATORADA
 
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
@@ -31,16 +30,12 @@ import DestaqueDinamico from '../components/DestaqueDinamico.astro';
 </Layout>
 
 <style>
-  /* Como o layout do Hero foi movido para dentro do próprio componente,
-    o CSS aqui fica muito mais simples!
-  */
   .divisor {
     border: none;
     border-top: 1px solid #374151;
-    margin: 60px 0; /* Aumentei um pouco a margem para mais respiro */
+    margin: 60px 0; 
   }
 
-  /* Adicionando um espaçamento entre as seções para não ficarem coladas */
   section:not(:first-of-type) {
     margin-top: 60px;
   }

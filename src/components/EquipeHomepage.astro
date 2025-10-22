@@ -1,6 +1,4 @@
 ---
-// src/components/EquipeHomepage.astro - VERSÃO REALMENTE CORRIGIDA
-
 import { Icon } from 'astro-icon/components';
 import { membros } from '../data/equipeDados';
 ---
@@ -33,7 +31,6 @@ import { membros } from '../data/equipeDados';
      <div class="membro-preview">
       <h4>Principais Skills:</h4>
       <ul>
-       {/* --- A CORREÇÃO ESTÁ AQUI --- */}
        {membro.skills.slice(0, 3).map(skill => (
         <li>{skill.nome}</li> 
        ))}

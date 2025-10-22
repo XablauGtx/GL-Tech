@@ -1,7 +1,5 @@
 ---
-// src/components/Skills.astro - VERSÃO MELHORADA (CATEGORIZADA)
 import { Icon } from 'astro-icon/components';
-// 1. Importamos os dados centralizados
 import { TECH_STACK } from '../data/techStack.ts';
 ---
 
@@ -45,12 +43,10 @@ import { TECH_STACK } from '../data/techStack.ts';
   background-color: var(--cor-destaque);
  }
 
- /* NOVO: Bloco para cada categoria */
  .categoria-bloco {
-  margin-bottom: 48px; /* Espaço entre as categorias */
+  margin-bottom: 48px; 
  }
  
- /* NOVO: Título da categoria */
  .categoria-titulo {
   font-size: 1.1rem;
   font-weight: 500;
@@ -77,10 +73,6 @@ import { TECH_STACK } from '../data/techStack.ts';
 
  .skill-card:hover {
   transform: scale(1.1);
-  /*     DICA OPCIONAL: Se achar o 'scale' muito "saltitante", 
-    troque por 'transform: translateY(-4px);'. 
-    Dá um efeito de "flutuar" mais sutil.
-  */
  }
  
  .skill-icone {

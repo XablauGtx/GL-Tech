@@ -1,6 +1,4 @@
 ---
-// src/components/Header.astro - CÓDIGO COMPLETO E ATUALIZADO
-
 const { pathname } = Astro.url;
 ---
 
@@ -45,11 +43,9 @@ const { pathname } = Astro.url;
     const mobileMenu = document.getElementById('mobile-menu');
 
     if (!menuToggle || !mobileMenu) {
-      // Se os elementos não existirem, não faz nada
       return;
     }
 
-    // Função para abrir/fechar o menu
     const toggleMenu = () => {
       const isVisible = mobileMenu.getAttribute('data-visible') === 'true';
       
@@ -59,44 +55,35 @@ const { pathname } = Astro.url;
       document.body.classList.toggle('no-scroll', !isVisible);
     };
 
-    // Função para fechar o menu (usada nos links)
     const closeMenu = () => {
       menuToggle.setAttribute('aria-expanded', 'false');
       mobileMenu.setAttribute('data-visible', 'false');
       document.body.classList.remove('no-scroll');
     };
-
-    // 1. Adiciona o listener ao botão principal
-    // Removemos qualquer listener antigo para evitar duplicação,
-    // embora com a substituição do DOM do Astro, isso seja mais uma garantia.
-    menuToggle.removeEventListener('click', toggleMenu); // Garante que não haja duplicatas
+    menuToggle.removeEventListener('click', toggleMenu); 
     menuToggle.addEventListener('click', toggleMenu);
 
     // 2. [MELHORIA] Fecha o menu quando um link é clicado
     const menuLinks = mobileMenu.querySelectorAll('nav a');
     menuLinks.forEach(link => {
-      link.removeEventListener('click', closeMenu); // Garante que não haja duplicatas
+      link.removeEventListener('click', closeMenu); 
       link.addEventListener('click', closeMenu);
     });
   }
 
-  // Roda a função no carregamento inicial da página
   setupMobileMenu();
-
-  // Roda a função NOVAMENTE toda vez que o Astro navegar para uma nova página
   document.addEventListener('astro:page-load', setupMobileMenu);
 </script>
 
 
 <style>
- /* --- LAYOUT DESKTOP (display: flex) --- */
  .site-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 32px;
-  position: relative; /* Adicionado para garantir o contexto de z-index */
-  z-index: 1001; /* Garante que o header fique sobre o conteúdo da página */
+  position: relative; 
+  z-index: 1001; 
  }
  .header-logo {
   flex: 1;
@@ -116,7 +103,6 @@ const { pathname } = Astro.url;
   display: none;
  }
 
- /* Outros estilos de desktop... */
  .header-logo img { height: 40px; width: auto; }
  .nav-pill { background-color: #111113; padding: 8px 16px; border-radius: 9999px; border: 1px solid #2d2d30; gap: 8px; }
  .nav-pill a { color: var(--cor-texto-secundario, #a0a0a0); text-decoration: none; padding: 8px 16px; border-radius: 20px; transition: all 0.3s ease; font-size: 0.9rem; font-weight: 500; }
@@ -125,28 +111,23 @@ const { pathname } = Astro.url;
  .cta-button { background-color: var(--cor-destaque, #3b82f6); color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background-color 0.3s; }
  .cta-button:hover { background-color: #2563eb; }
  
- /* --- ESTILOS DO MENU MOBILE OVERLAY (CORRIGIDOS) --- */
  .icon-close { display: none; }
  .mobile-menu {
   position: fixed;
-  top: 0; /* Ocupa a tela inteira */
+  top: 0; 
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(25, 28, 35, 0.98);
   backdrop-filter: blur(8px);
-  z-index: 1000; /* Fica abaixo do header, mas acima de todo o resto */
-  
-  /* Lógica para esconder e mostrar */
+  z-index: 1000; 
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  
-  /* CORREÇÃO DE ALINHAMENTO AQUI 👇 */
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centraliza horizontalmente */
-  justify-content: center; /* Centraliza verticalmente */
+  align-items: center; 
+  justify-content: center; 
  }
 
  .mobile-menu[data-visible="true"] {
@@ -157,7 +138,7 @@ const { pathname } = Astro.url;
  .mobile-menu nav {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Garante que o botão também fique centralizado */
+  align-items: center; 
   gap: 20px;
   text-align: center;
  }
@@ -173,11 +154,10 @@ const { pathname } = Astro.url;
   color: var(--cor-fundo);
   border-radius: 8px;
   margin-top: 20px;
-  padding: 12px 24px; /* Adicionado padding para consistência */
+  padding: 12px 24px; 
  }
 
 
- /* --- LAYOUT MOBILE (display: grid) --- */
  @media (max-width: 900px) {
   .nav-pill, .header-actions {
    display: none;
@@ -187,7 +167,6 @@ const { pathname } = Astro.url;
    display: grid;
    grid-template-columns: 50px 1fr 50px;
    padding: 16px;
-   /* Garante que o fundo do header não seja transparente no modo mobile */
    background-color: var(--cor-fundo); 
    border-radius: 10px;
   }

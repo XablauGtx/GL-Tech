@@ -1,6 +1,4 @@
 ---
-// Arquivo: src/layouts/LayoutDuasColunas.astro - VERSÃO CORRIGIDA
-
 import Header from '../components/Header.astro';
 import { ViewTransitions } from 'astro:transitions';
 ---
@@ -44,7 +42,7 @@ import { ViewTransitions } from 'astro:transitions';
     margin: 0;
     background-color: var(--cor-fundo);
     
-    /* MUDANÇA 2: Usamos a variável CSS (--bg-image) aqui */
+    
     background-image: linear-gradient(rgba(20, 23, 29, 0.9), rgba(20, 23, 29, 0.9)), url('/background.png');
 
     background-size: cover;
@@ -74,7 +72,7 @@ import { ViewTransitions } from 'astro:transitions';
 
   @media (max-width: 768px) {
     .site-container {
-      /* Reduz o padding lateral para telas menores */
+      
       padding: 0 20px;
     }
   }

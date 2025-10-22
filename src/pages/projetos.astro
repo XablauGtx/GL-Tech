@@ -1,5 +1,4 @@
 ---
-// src/pages/projetos.astro - VERSÃO CORRIGIDA
 
 import PaginaInterna from '../layouts/PaginaInterna.astro';
 import Skills from '../components/Skills.astro';
@@ -9,15 +8,11 @@ import Depoimentos from '../components/Depoimentos.astro';
 
 const todosProjetos = await getCollection('projetos');
 
-// Ordenação segura, lidando com datas opcionais
 todosProjetos.sort((a: CollectionEntry<'projetos'>, b: CollectionEntry<'projetos'>) => {
-  // Tenta pegar a data de 'b'. Se não existir, usa 0.
-  const dateB = b.data.data?.getTime() || 0;
-  // Tenta pegar a data de 'a'. Se não existir, usa 0.
-  const dateA = a.data.data?.getTime() || 0;
+    const dateB = b.data.data?.getTime() || 0;
+    const dateA = a.data.data?.getTime() || 0;
 
-  // Compara os números, garantindo que nunca haverá um erro.
-  return dateB - dateA;
+    return dateB - dateA;
 });
 ---
 

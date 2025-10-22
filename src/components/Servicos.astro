@@ -1,5 +1,4 @@
 ---
-// src/components/Servicos.astro - CONECTADO AOS PROJETOS
 import { Icon } from 'astro-icon/components';
 
 const servicos = [
@@ -7,13 +6,12 @@ const servicos = [
     icone: 'mdi:server-network',
     titulo: 'Infraestrutura Cloud & DevOps',
     descricao: 'Projetamos e gerenciamos arquiteturas na nuvem (AWS, Google Cloud) que são seguras, escaláveis e de alta disponibilidade. Garantimos que sua operação digital esteja sempre no ar e pronta para crescer.',
-    filtro: 'infra', // Categoria correspondente nos projetos (sugestão)
+    filtro: 'infra', 
   },
   {
     icone: 'mdi:code-braces',
     titulo: 'Desenvolvimento Web & Mobile',
     descricao: 'Construímos plataformas, e-commerces e aplicativos sob medida que funcionam perfeitamente em qualquer dispositivo. Do back-end robusto ao front-end interativo, transformamos sua visão em código.',
-    // O valor do filtro deve ser igual ao 'data-categoria' no Laboratorio
     filtro: 'web', 
   },
   {
@@ -32,13 +30,13 @@ const servicos = [
   <div class="servicos-grid">
     {servicos.map(servico => (
       <div class="servico-card">
-        <div> {/* Div extra para controlar o layout com flexbox */}
+        <div> {}
           <Icon name={servico.icone} class="servico-icone" />
           <h3 class="servico-titulo">{servico.titulo}</h3>
           <p class="servico-descricao">{servico.descricao}</p>
         </div>
         
-        {/* LINK ADICIONADO AQUI */}
+        {}
         <a href={`/projetos?categoria=${servico.filtro}`} class="servico-link">
           Ver projetos relacionados
           <Icon name="mdi:arrow-right" />
@@ -49,22 +47,22 @@ const servicos = [
 </section>
 
 <style>
-  /* Seus estilos existentes */
+  
   .servicos-header { text-align: center; margin-bottom: 60px; }
   .titulo-pagina { font-size: 2.5rem; margin-bottom: 8px; }
   .subtitulo-pagina { font-size: 1.1rem; color: var(--cor-texto-secundario); max-width: 500px; margin: 0 auto; }
   .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
   
-  /* --- REFINAMENTOS NO CARD --- */
+  
   .servico-card {
     background-color: var(--cor-fundo-secundario);
     padding: 32px;
     border-radius: 8px;
     border-top: 4px solid var(--cor-destaque);
-    display: flex; /* Adicionado para o link no final */
-    flex-direction: column; /* Adicionado */
-    justify-content: space-between; /* Adicionado */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efeito hover */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
   }
 
   .servico-card:hover {
@@ -74,9 +72,9 @@ const servicos = [
 
   .servico-icone { font-size: 3rem; color: var(--cor-destaque); margin-bottom: 16px; }
   .servico-titulo { font-size: 1.3rem; margin-top: 0; margin-bottom: 12px; }
-  .servico-descricao { color: var(--cor-texto-secundario); line-height: 1.7; margin-bottom: 24px; } /* Adicionado margin-bottom */
+  .servico-descricao { color: var(--cor-texto-secundario); line-height: 1.7; margin-bottom: 24px; } 
 
-  /* Estilo para o novo link */
+  
   .servico-link {
     color: var(--cor-destaque);
     text-decoration: none;
@@ -84,7 +82,7 @@ const servicos = [
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: auto; /* Empurra o link para o final do card */
+    margin-top: auto; 
   }
   .servico-link:hover {
     text-decoration: underline;

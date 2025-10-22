@@ -1,8 +1,7 @@
 ---
-// Arquivo: src/components/Contato.astro - VERSÃO FINAL COM BOTÃO WHATSAPP
 
 import { LISTA_DE_SERVICOS } from '../data/servicos';
-import { Icon } from 'astro-icon/components'; // 1. Importar o componente Icon
+import { Icon } from 'astro-icon/components';
 ---
 <section class="contato-section">
  <div class="contato-grid">
@@ -15,14 +14,12 @@ import { Icon } from 'astro-icon/components'; // 1. Importar o componente Icon
    <div class="contato-manual">
     <p>Ou nos contate diretamente:</p>
     
-    {/* 2. Container para alinhar E-mail e WhatsApp */}
     <div class="contato-direto-links">
      <a href="mailto:contato@gltechnology.com.br" class="link-direto email">
       <Icon name="mdi:email-outline" class="contato-icone"/>
       contato@gltechnology.com.br
      </a>
     
-     {/* 3. ADICIONADO: Link/Botão do WhatsApp */}
      <a 
       href="https://wa.me/5541995097919" 
       target="_blank" 
@@ -108,31 +105,30 @@ import { Icon } from 'astro-icon/components'; // 1. Importar o componente Icon
   padding-top: 24px;
  }
  .contato-manual p {
-  margin: 0 0 16px 0; /* Aumentei a margem inferior */
+  margin: 0 0 16px 0; 
   color: var(--cor-texto-secundario);
  }
 
- /* 4. NOVO: Estilos para alinhar os links */
  .contato-direto-links {
   display: flex;
-  flex-direction: column; /* Um link abaixo do outro */
-  gap: 16px; /* Espaço entre os links */
+  flex-direction: column; 
+  gap: 16px; 
  }
  .link-direto {
   color: var(--cor-texto-principal);
   font-weight: 500;
   font-size: 1.1rem;
   text-decoration: none;
-  display: inline-flex; /* Para alinhar o ícone com o texto */
+  display: inline-flex;
   align-items: center;
-  gap: 10px; /* Espaço entre ícone e texto */
+  gap: 10px; 
   transition: color 0.3s;
  }
  .link-direto:hover {
   color: var(--cor-destaque);
  }
  .contato-icone {
-  font-size: 1.5rem; /* Tamanho do ícone */
+  font-size: 1.5rem;
  }
  .link-direto.whatsapp {
  }
@@ -193,7 +189,6 @@ import { Icon } from 'astro-icon/components'; // 1. Importar o componente Icon
   display: none;
  }
  
- /* Estilos dos Checkboxes */
  .checkbox-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -258,7 +253,6 @@ import { Icon } from 'astro-icon/components'; // 1. Importar o componente Icon
   transform: rotate(45deg);
  }
 
- /* --- REGRAS DE RESPONSIVIDADE ADICIONADAS AQUI --- */
  @media (max-width: 900px) {
   .contato-grid {
    grid-template-columns: 1fr;
@@ -270,9 +264,8 @@ import { Icon } from 'astro-icon/components'; // 1. Importar o componente Icon
   .contato-manual {
    text-align: center;
   }
-  /* 5. NOVO: Centraliza os links no mobile */
   .contato-direto-links {
-   align-items: center; /* Alinha os itens no centro */
+   align-items: center;
   }
  }
 

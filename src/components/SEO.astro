@@ -1,5 +1,4 @@
 ---
-// src/components/SEO.astro
 import { SEO as AstroSEO } from "astro-seo";
 
 interface Props {
@@ -8,14 +7,12 @@ interface Props {
   image?: string;
 }
 
-// Valores padrão caso nenhuma prop seja passada
 const {
   title = "GL Technology - Soluções Digitais Completas",
   description = "Da infraestrutura à interface, criamos soluções digitais robustas e sob medida para o seu sucesso.",
-  image = "/og-image.png", // Imagem padrão para compartilhamento
+  image = "/og-image.png", 
 } = Astro.props;
 
-// Gera a URL completa e absoluta para a imagem de compartilhamento
 const imageUrl = new URL(image, Astro.site).href;
 ---
 

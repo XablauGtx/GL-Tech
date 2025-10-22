@@ -1,6 +1,4 @@
 ---
-// Arquivo: src/pages/equipe/[slug].astro - VERSÃO CORRIGIDA
-
 import PaginaInterna from '../../layouts/PaginaInterna.astro';
 import { membros, type MembroEquipe } from '../../data/equipeDados';
 import { Icon } from 'astro-icon/components';
@@ -61,7 +59,6 @@ function getIconName(plataforma: MembroEquipe['redesSociais'][number]['plataform
      {membro.skills.map(skill => (
       <div class="skill-card">
        <Icon name={skill.icone || 'mdi:check-decagram'} class="skill-icone" />
-       {/* --- CORREÇÃO ESTÁ AQUI --- */}
        <span>{skill.nome}</span>
       </div>
      ))}

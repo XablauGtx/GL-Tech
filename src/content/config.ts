@@ -3,7 +3,6 @@ import { defineCollection, z } from 'astro:content';
 const projetosCollection = defineCollection({
  type: 'content', 
  schema: z.object({
-  // --- Campos Principais (do Laboratorio.astro) ---
   titulo: z.string(),
   resumo: z.string(), 
   categoria: z.string(), 
